@@ -6,12 +6,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class ShareServieImpl implements ShareService {
+public class ShareServiceImplementation implements ShareService {
 
     private final ShareRepository shareRepository;
 
     @Autowired
-    public ShareServieImpl(ShareRepository shareRepository){
+    public ShareServiceImplementation(ShareRepository shareRepository){
         this.shareRepository= shareRepository;
     }
 
