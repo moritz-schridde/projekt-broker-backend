@@ -29,6 +29,10 @@ public class Share {
     @Setter
     private double price;
 
+    @Getter
+    @Setter
+    private double checkInterest;
+
 
     public Share(@NotNull Long id, String name, String wkn, double price) {
         this.id = id;
