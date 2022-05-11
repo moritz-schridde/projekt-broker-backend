@@ -20,6 +20,8 @@ public class FinanceAppApplication {
         return args -> {
             Share s1 = new Share("SAP", "test", 133.46);
             shareRepository.save(s1);
+            Share s2 = new Share("BASF", "test", 55.32);
+            shareRepository.save(s2);
         };
     }
 }
