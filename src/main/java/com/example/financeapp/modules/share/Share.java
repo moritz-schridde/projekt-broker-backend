@@ -33,7 +33,6 @@ public class Share {
     @Setter
     private String category;
 
-
     public Share(@NotNull Long id, String name, String wkn, double price, String category) {
         this.id = id;
         this.name = name;
