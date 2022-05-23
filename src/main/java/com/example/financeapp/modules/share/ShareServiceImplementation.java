@@ -45,6 +45,14 @@ public class ShareServiceImplementation implements ShareService {
     }
 
     @Override
+    public List<Share> findAllShareByCategory(String category) throws Exception {
+        List<Share> shares = new ArrayList<Share>();
+        shares = shareRepository.findAllByCategory(category);
+
+        return shares;
+    }
+
+    @Override
     public void deleteOrder(Long id) throws Exception {
         try{
             Share share = shareRepository.getShareById(id);

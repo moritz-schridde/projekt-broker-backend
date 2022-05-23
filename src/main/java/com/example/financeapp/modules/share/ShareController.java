@@ -33,9 +33,15 @@ public class ShareController {
         return ResponseEntity.ok(shareService.getSharePrice(id));
     }
 
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<Share>> findAllShareByCategory(@PathVariable String category) throws Exception {
+        return ResponseEntity.ok(shareService.findAllShareByCategory(category));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity deleteMatchedOrder(@PathVariable Long id) throws Exception {
         shareService.deleteOrder(id);
         return ResponseEntity.ok("Order deleted Successfully");
     }
+
 }
