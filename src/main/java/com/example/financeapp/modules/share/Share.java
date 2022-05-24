@@ -31,21 +31,22 @@ public class Share {
 
     @Getter
     @Setter
-    private double checkInterest;
+    private String category;
 
-
-    public Share(@NotNull Long id, String name, String wkn, double price) {
+    public Share(@NotNull Long id, String name, String wkn, double price, String category) {
         this.id = id;
         this.name = name;
         this.wkn = wkn;
         this.price = price;
+        this.category = category;
     }
 
-    public Share(String name, String wkn, double price) {
+    public Share(String name, String wkn, double price, String category) {
         this.id = id;
         this.name = name;
         this.wkn = wkn;
         this.price = price;
+        this.category = category;
     }
 
     public Share() {
