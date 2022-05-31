@@ -21,4 +21,24 @@ public class ShareServieImpl implements ShareService {
 
         return shareRepository.findAll();
     }
+
+    @Override
+    public List getSharePrices() throws Exception {
+        return null;
+    }
+
+    @Override
+    public List getSharePrice(Long id) throws Exception {
+        return null;
+    }
+
+    @Override
+    public List<Share> findAllShareByCategory(String category) throws Exception {
+        return null;
+    }
+
+    @Override
+    public void deleteOrder(Long id) throws Exception {
+
+    }
 }
