@@ -18,7 +18,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.awt.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +30,23 @@ import java.util.Map;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final String[] allowedPublicApisGet = new String[] {
+            "/share/**", "/share", "/market"};
+    private static final String[] AUTH_WHITELIST = {
+            // -- Swagger UI v2
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            // -- Swagger UI v3 (OpenAPI)
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+            // other public endpoints of your API may be appended to this array
+    };
 
     @Autowired
     ObjectMapper objectMapper;
@@ -72,7 +91,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().configurationSource(corsConfigurationSource()).and().csrf().disable().formLogin().disable()
         .httpBasic().disable().exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint())
                 .and().authorizeRequests()
-//                .antMatchers(restSecProps.getAllowedPublicApis().toArray(String[]::new)).permitAll()
+                .antMatchers(restSecProps.getAllowedPublicApis().toArray(String[]::new)).permitAll()
+                .antMatchers(HttpMethod.GET, allowedPublicApisGet).permitAll()
+                .antMatchers(HttpMethod.GET, AUTH_WHITELIST).permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/account/me").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated().and()
                 .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
