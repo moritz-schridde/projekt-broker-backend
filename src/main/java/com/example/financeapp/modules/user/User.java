@@ -1,27 +1,45 @@
 package com.example.financeapp.modules.user;
 
+import com.example.financeapp.modules.user.id.UserId;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.UUID;
+import java.util.StringJoiner;
 
+/* {
+    name : "name",
+    surname : "surname",
+    email : "email",
+    password : "encrypted secret",
+    phone: "phoneNumber",
+    street : "street",
+    number : "houseNumber",
+    postalCode : "postalCode",
+    city : "city",
+    country : "country",
+    birthDay : "bDay",
+    birthMonth : "bMonth",
+    birthYear : "bYear"
+} */
 public class User {
 
     @Id
     @GeneratedValue
     @Getter
-    @Setter
     @NotNull
-    private UUID id;
+    private UserId id;
 
     @Getter
     @Setter
     @NotNull
-    private String forename;
+    private String name;
 
     @Getter
     @Setter
@@ -31,14 +49,17 @@ public class User {
     @Getter
     @Setter
     @NotNull
+    private String email;
+
+    @Getter
+    @Setter
+    @NotNull
     private String password;
 
     @Getter
     @Setter
     @NotNull
-    private String email;
-
-    // Object for address?
+    private int phoneNumber;
 
     @Getter
     @Setter
@@ -65,24 +86,49 @@ public class User {
     @NotNull
     private String country;
 
-    public User() {
-    }
+    @Getter
+    @Setter
+    @NotNull
+    private int birthDay;
 
-    public User(@NotNull UUID id, @NotNull String forename, @NotNull String surname, @NotNull String password, @NotNull String email) {
+    @Getter
+    @Setter
+    @NotNull
+    private int birthMonth;
+
+    @Getter
+    @Setter
+    @NotNull
+    private int birthYear;
+
+    @JsonCreator
+    public User(@JsonProperty("userId") @NotNull UserId id, @JsonProperty("name") @NotNull String name, @JsonProperty("surname") @NotNull String surname, @JsonProperty("email") @NotNull String email, @JsonProperty("password") @NotNull String password, @JsonProperty("phoneNumber") @NotNull int phoneNumber, @JsonProperty("street") @NotNull String street, @JsonProperty("houseNumber") @NotNull String houseNumber, @JsonProperty("postalCode") @NotNull String postalCode, @JsonProperty("city") @NotNull String city, @JsonProperty("country") @NotNull String country, @JsonProperty("birthDay") @NotNull String birthDay, @JsonProperty("birthMonth") @NotNull String birthMonth, @JsonProperty("birthYear") @NotNull String birthYear) {
         this.id = id;
-        this.forename = forename;
+        this.name = name;
         this.surname = surname;
-        this.password = passwordEncoder().encode(password);
         this.email = email;
+        this.password = passwordEncoder().encode(password);
+        this.phoneNumber = phoneNumber;
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.postalCode = postalCode;
+        this.city = city;
+        this.country = country;
+        this.birthDay = Integer.parseInt(birthDay);
+        this.birthMonth = Integer.parseInt(birthMonth);
+        this.birthYear = Integer.parseInt(birthYear);
     }
 
-//    public User(@NotNull String username, @NotNull String password, @NotNull String email) {
-//        this.username = username;
-//        this.password = passwordEncoder().encode(password);
-//        this.email = email;
-//    }
 
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", User.class.getSimpleName() + "[", "]")
+                .add(String.format("id=%s", id))
+                .toString();
+    }
+
 }
