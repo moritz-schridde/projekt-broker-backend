@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "projekt-wertpapierhandel",
+  "private_key_id": "4b25b3a179eb118828a376ced28b8a26f8cf0abd",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxrbfj7qC4DwQ+\nihBdKGpaWRtfDXgVekJLH9LvcSJl62Jdij3Zwja3wynnoXQYWFrrnUQ78rlFADcz\noo9QyxZLcWJ3s367MoB2WIce59CVypUloOd7YViYWkTyHpJPFqkRmdpIDRAxqQBn\n5lrsEodJeKs8tK4zHQSESAnhNI6FQLudfsByc5raG4Msopg+LOmxRDsNzMqP/zsH\nQ4fh5bH6G7lWEP8RBTrAIWowdvejtqaSysiZlv68crJooBWdPXaBF7uhShysBc/k\n1TK95PVeSJgBE0D7uZfxicm8Kx1hLuIXOPvUsRUFnSt5n/Sn0JyQ5TVLcriiRqlL\nURm8JvLNAgMBAAECggEAGJpMKArjJNFpfkpqVSfzQBLuHBWWnuy4sMPVlrO09mVn\nT7oEcfp3Tq8+xnTgCT30ywLSD7X+qvwKaMM18pNIgUZQQvBvGDc4PArqnOAvDQrJ\n57W1z+sNFD2NpfQPQNXLr+T8qXTrnODArmJijSVMp+MGXQfMxkWamkGKYq1/HZq7\nu+ET/nzIhUYSPszZu6uO/HSR7111NIXTsllvttzO6FsWn14NT0BeSu22dPoDK9zz\nb3nKURCfht3wXfN0FtLHlM2zUbRRbpt8xCWufsKwYM1e6wtLGZNp3Iy2z7w5ptOh\nJ/c0mN4gVnyq2+hrzU12EWdCV+hAL95i7p6wBWiTCQKBgQDaA572jCPnJINZb3UD\nd5RC1DKoHdGWbEyj7a7r6RCQjzte2DbnTJyhRB3EmELuXWYxKWgrxv2ZJTMP9UvG\nAD0xpI0MgGltFp+Om7wc5gQ+wJsOcbRDvdo9mzq+2bgMevNrfEc80PkL32UYjYNH\nJGipCkSCOxqcIC6uR+afosyi+QKBgQDQovTCakGnMlDeUNPF8gnrDdtD9wefBznC\nj0pmk2xp9ljyBg14/fH5gqvzqSiOvYixtoFf4sIdl31EYwsFGG5iB0d6HgDgeU+7\nmAgMp8ui7ruSni615uSmro/jL/ETrTRgQMniKYyoJw7iZ+IX79MGykmfNM2anHfU\ngZ4gMMrvdQKBgB5uevX3Qdu14Q/O2wqM2okpjZih8OuKWnhXaR9M/R7wn1zx2VgX\n/ZUVKQKULmOPbgBWw0+5CxUheCs2FkmhJumTCo1AL3cmvUbuvidahCUuRXaSsJL0\nIU6QKHcTdPlpACl0w4zdrqXVnQr8VeLMVj+iS0XScjhw1ZNGPg7ybpYhAoGBALOv\nlPMXxmF0MTe3DxzM/wPE1FHtoE+zTmilNiOv1lBQTXxsABBzTYJhqyxYRMjiraa4\nkyX8ysfnn4hVcLk7uF2O/V1MF988O5JKNqyHmxdBWqTEvWAGcminsN6ufIdAxfob\n8oNo22467VPKumt5LhsL/2oxdN4y4fVQiNoai7y9AoGAIZk9xFQH9x2EX+CaKWKG\niEHflgLGCSGUMB/3e0dO0cgRaWG4Y/fAi6cBQJayJKgeUFdHa8wqETlTfu8lLlyL\nJhhEWY/FRJHyErOELac5CaEFr67wtlkc7zRGzBRxN++rCPbThXF+AEden6CDaeRa\nAqVR5Jtpn8lv61hvPPTO+U0=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-bogzl@projekt-wertpapierhandel.iam.gserviceaccount.com",
+  "client_id": "109220101937249106591",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-bogzl%40projekt-wertpapierhandel.iam.gserviceaccount.com"
+}
