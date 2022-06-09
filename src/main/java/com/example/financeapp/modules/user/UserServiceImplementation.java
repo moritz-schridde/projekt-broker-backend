@@ -1,8 +1,6 @@
 package com.example.financeapp.modules.user;
 
-import com.example.financeapp.modules.user.id.UserId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -19,13 +17,13 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User getUser(UUID id) {
-        return userRepository.getUserById(new UserId(id));
+        return userRepository.getUserById(id);
     }
 
     @Override
-    public UserId createUser(User user) {
-        if (!userRepository.existsById(user.getId().getUUID())) {
-            UserId id = new UserId(UUID.randomUUID());
+    public UUID createUser(User user) {
+        if (!userRepository.existsById(user.getId())) {
+            UUID id = UUID.randomUUID();
             userRepository.save(new User(id, user));
             return id;
         } else {
@@ -45,9 +43,9 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public boolean deleteUser(UserId userId) {
-        if (userRepository.existsById(userId.getUUID())) {
-            userRepository.deleteById(userId.getUUID());
+    public boolean deleteUser(UUID userId) {
+        if (userRepository.existsById(userId)) {
+            userRepository.deleteById(userId);
             return true;
         }
         return false;

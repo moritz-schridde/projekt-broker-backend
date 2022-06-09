@@ -1,6 +1,5 @@
 package com.example.financeapp.modules.user;
 
-import com.example.financeapp.modules.user.id.UserId;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
@@ -9,6 +8,7 @@ import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.StringJoiner;
@@ -29,13 +29,15 @@ import java.util.UUID;
     birthMonth : "bMonth",
     birthYear : "bYear"
 } */
+
+@Entity
 public class User {
 
     @Id
     @GeneratedValue
     @Getter
     @NotNull
-    private UserId id;
+    private UUID id;
 
     @Getter
     @Setter
@@ -103,7 +105,7 @@ public class User {
     private int birthYear;
 
     @JsonCreator
-    public User(@JsonProperty("userId") @NotNull UserId id, @JsonProperty("name") @NotNull String name, @JsonProperty("surname") @NotNull String surname, @JsonProperty("email") @NotNull String email, @JsonProperty("password") @NotNull String password, @JsonProperty("phoneNumber") @NotNull int phoneNumber, @JsonProperty("street") @NotNull String street, @JsonProperty("houseNumber") @NotNull String houseNumber, @JsonProperty("postalCode") @NotNull String postalCode, @JsonProperty("city") @NotNull String city, @JsonProperty("country") @NotNull String country, @JsonProperty("birthDay") @NotNull String birthDay, @JsonProperty("birthMonth") @NotNull String birthMonth, @JsonProperty("birthYear") @NotNull String birthYear) {
+    public User(@JsonProperty("userId") @NotNull UUID id, @JsonProperty("name") @NotNull String name, @JsonProperty("surname") @NotNull String surname, @JsonProperty("email") @NotNull String email, @JsonProperty("password") @NotNull String password, @JsonProperty("phoneNumber") @NotNull int phoneNumber, @JsonProperty("street") @NotNull String street, @JsonProperty("houseNumber") @NotNull String houseNumber, @JsonProperty("postalCode") @NotNull String postalCode, @JsonProperty("city") @NotNull String city, @JsonProperty("country") @NotNull String country, @JsonProperty("birthDay") @NotNull String birthDay, @JsonProperty("birthMonth") @NotNull String birthMonth, @JsonProperty("birthYear") @NotNull String birthYear) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -120,7 +122,7 @@ public class User {
         this.birthYear = Integer.parseInt(birthYear);
     }
 
-    public User(@NotNull UserId id, @NotNull User user) {
+    public User(@NotNull UUID id, @NotNull User user) {
         this.id = id;
         this.name = user.getName();
         this.surname = user.getSurname();
@@ -135,6 +137,10 @@ public class User {
         this.birthDay = user.getBirthDay();
         this.birthMonth = user.getBirthMonth();
         this.birthYear = user.getBirthYear();
+    }
+
+    public User() {
+
     }
 
     public PasswordEncoder passwordEncoder() {

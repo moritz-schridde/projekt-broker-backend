@@ -1,6 +1,5 @@
 package com.example.financeapp.modules.user;
 
-import com.example.financeapp.modules.user.id.UserId;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
@@ -23,19 +23,19 @@ public class UserController {
 
     @GetMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<User> getUser(@PathVariable("userId") UserId userId) {
-        return ResponseEntity.ok(userService.getUser(userId.getUUID()));
+    public ResponseEntity<User> getUser(@PathVariable("userId") UUID userId) {
+        return ResponseEntity.ok(userService.getUser(userId));
     }
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> createUser(User user) throws URISyntaxException {
-        UserId created = userService.createUser(user);
+        UUID created = userService.createUser(user);
         if (created != null) {
             URI uri = new URIBuilder()
                     .addParameter("scheme", "https")
                     .addParameter("host", "api.trade-empire.karottenkameraden.de")
-                    .addParameter("path", "/user/create/" + created.getUUID().toString())
+                    .addParameter("path", "/user/create/" + created)
                     .build();
             return ResponseEntity.created(uri).build();
         } else {
@@ -45,8 +45,8 @@ public class UserController {
 
     @PutMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> updateUser(@PathVariable("userId") UserId userId, User user) {
-        boolean updated = userService.updateUser(userId.getUUID(), user);
+    public ResponseEntity<Object> updateUser(@PathVariable("userId") UUID userId, User user) {
+        boolean updated = userService.updateUser(userId, user);
         if (updated) {
             return ResponseEntity.ok().build();
         } else {
@@ -56,7 +56,7 @@ public class UserController {
 
     @DeleteMapping("{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> deleteUser(@PathVariable("userId") UserId userId) {
+    public ResponseEntity<Object> deleteUser(@PathVariable("userId") UUID userId) {
         boolean deleted = userService.deleteUser(userId);
         return (deleted) ? ResponseEntity.ok().build() : ResponseEntity.noContent().build();
     }
