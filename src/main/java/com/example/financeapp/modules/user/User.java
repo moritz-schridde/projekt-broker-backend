@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.StringJoiner;
+import java.util.UUID;
 
 /* {
     name : "name",
@@ -119,6 +120,22 @@ public class User {
         this.birthYear = Integer.parseInt(birthYear);
     }
 
+    public User(@NotNull UserId id, @NotNull User user) {
+        this.id = id;
+        this.name = user.getName();
+        this.surname = user.getSurname();
+        this.email = user.getEmail();
+        this.password = passwordEncoder().encode(user.getPassword());
+        this.phoneNumber = user.getPhoneNumber();
+        this.street = user.getStreet();
+        this.houseNumber = user.getHouseNumber();
+        this.postalCode = user.getPostalCode();
+        this.city = user.getCity();
+        this.country = user.getCountry();
+        this.birthDay = user.getBirthDay();
+        this.birthMonth = user.getBirthMonth();
+        this.birthYear = user.getBirthYear();
+    }
 
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

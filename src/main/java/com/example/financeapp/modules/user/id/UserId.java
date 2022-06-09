@@ -14,7 +14,7 @@ public class UserId {
     }
 
     @JsonValue
-    public UUID getId() {
+    public UUID getUUID() {
         return id;
     }
 
