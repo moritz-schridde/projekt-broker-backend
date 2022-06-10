@@ -1,4 +1,4 @@
-package com.example.financeapp.modules.depot;
+package com.example.financeapp.modules.depot.response;
 
 import lombok.Getter;
 import lombok.Setter;

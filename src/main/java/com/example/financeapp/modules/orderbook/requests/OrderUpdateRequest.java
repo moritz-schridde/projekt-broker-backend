@@ -1,5 +1,6 @@
-package com.example.financeapp.modules.orderbook;
+package com.example.financeapp.modules.orderbook.requests;
 
+import com.example.financeapp.modules.orderbook.OrderEnums;
 import lombok.Getter;
 import lombok.Setter;
 
