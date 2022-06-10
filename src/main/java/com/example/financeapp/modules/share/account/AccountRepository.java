@@ -1,4 +1,4 @@
-package com.example.financeapp.modules.account;
+package com.example.financeapp.modules.share.account;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

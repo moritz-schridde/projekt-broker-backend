@@ -1,4 +1,4 @@
-package com.example.financeapp.modules.account;
+package com.example.financeapp.modules.share.account;
 
 import com.example.financeapp.auth.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
