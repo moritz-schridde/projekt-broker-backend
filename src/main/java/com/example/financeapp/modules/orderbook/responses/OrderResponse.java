@@ -1,4 +1,4 @@
-package com.example.financeapp.modules.orderbook.response;
+package com.example.financeapp.modules.orderbook.responses;
 
 import com.example.financeapp.modules.orderbook.OrderEnums;
 import lombok.Getter;

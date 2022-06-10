@@ -1,6 +1,6 @@
 package com.example.financeapp.modules.depot;
 
-import com.example.financeapp.modules.depot.response.DepotResponse;
+import com.example.financeapp.modules.depot.responses.DepotResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

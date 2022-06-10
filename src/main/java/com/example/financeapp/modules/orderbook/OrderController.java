@@ -2,7 +2,7 @@ package com.example.financeapp.modules.orderbook;
 
 import com.example.financeapp.modules.orderbook.requests.OrderCreateRequest;
 import com.example.financeapp.modules.orderbook.requests.OrderUpdateRequest;
-import com.example.financeapp.modules.orderbook.response.OrderResponse;
+import com.example.financeapp.modules.orderbook.responses.OrderResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

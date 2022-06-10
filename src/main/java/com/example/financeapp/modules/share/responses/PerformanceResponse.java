@@ -1,4 +1,4 @@
-package com.example.financeapp.modules.share.response;
+package com.example.financeapp.modules.share.responses;
 
 import lombok.Getter;
 import lombok.Setter;
