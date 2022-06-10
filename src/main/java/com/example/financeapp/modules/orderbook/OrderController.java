@@ -1,7 +1,5 @@
 package com.example.financeapp.modules.orderbook;
 
-import org.aspectj.weaver.ast.Or;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,15 +14,12 @@ public class OrderController {
     public ResponseEntity<ArrayList<OrderResponse>> findAllOrders() {
         ArrayList<OrderResponse> dummyOrderList = new ArrayList<>();
         dummyOrderList.add(new OrderResponse());
-        dummyOrderList.add(new OrderResponse());
-        dummyOrderList.add(new OrderResponse());
-        dummyOrderList.add(new OrderResponse());
         return ResponseEntity.ok(dummyOrderList);
     }
 
 
     @PostMapping
-    public ResponseEntity<String> createOrder(@RequestBody @Valid Order request){
+    public ResponseEntity<String> createOrder(@RequestBody @Valid OrderCreateRequest createRequest){
         boolean success = true;
         if (success) {
             return ResponseEntity.ok("Success");
@@ -34,7 +29,7 @@ public class OrderController {
     }
 
     @PutMapping
-    public ResponseEntity<String> updateOrder() {
+    public ResponseEntity<String> updateOrder(@RequestBody @Valid OrderUpdateRequest updateRequest) {
         boolean success = true;
         if (success) {
             return ResponseEntity.ok("Success");
@@ -43,7 +38,7 @@ public class OrderController {
         }
     }
 
-    @DeleteMapping ResponseEntity<String> deleteOrder() {
+    @DeleteMapping ResponseEntity<String> deleteOrder(@RequestBody String[] orderId) {
         boolean success = true;
         if (success) {
             return ResponseEntity.ok("Success");
