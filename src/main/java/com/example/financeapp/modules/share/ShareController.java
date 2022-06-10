@@ -23,25 +23,34 @@ public class ShareController {
         return ResponseEntity.ok(shareService.findAllShare());
     }
 
-    @GetMapping("/price")
+    @GetMapping("/performance")
     public ResponseEntity<List> getSharePrices() throws Exception {
         return ResponseEntity.ok(shareService.getSharePrices());
     }
 
-    @GetMapping("/price/{id}")
-    public ResponseEntity<List> getSharePrice(@PathVariable Long id) throws Exception {
-        return ResponseEntity.ok(shareService.getSharePrice(id));
-    }
-
-    @GetMapping("/category/{category}")
+    @GetMapping("/search")
     public ResponseEntity<List<Share>> findAllShareByCategory(@PathVariable String category) throws Exception {
         return ResponseEntity.ok(shareService.findAllShareByCategory(category));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity deleteMatchedOrder(@PathVariable Long id) throws Exception {
-        shareService.deleteOrder(id);
-        return ResponseEntity.ok("Order deleted Successfully");
+    @PostMapping
+    public ResponseEntity<String> addNewShare(@RequestBody Long shareId) throws Exception {
+        boolean success = true;
+        if(success) {
+            return ResponseEntity.ok("Success");
+        } else {
+            return ResponseEntity.badRequest().body("Failed");
+        }
+    }
+    @DeleteMapping
+    public ResponseEntity<String> deleteShareById(@RequestBody Long shareId) throws Exception {
+        boolean success = true;
+        shareService.deleteOrder(shareId);
+        if(success) {
+            return ResponseEntity.ok("Success");
+        } else {
+            return ResponseEntity.badRequest().body("Failed");
+        }
     }
 
 }

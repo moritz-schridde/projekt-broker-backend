@@ -3,12 +3,9 @@ package com.example.financeapp;
 
 import com.example.financeapp.modules.bank.Bank;
 import com.example.financeapp.modules.bank.BankRepository;
-import com.example.financeapp.modules.orderbook.Order;
-import com.example.financeapp.modules.orderbook.OrderRepository;
 
 import com.example.financeapp.modules.share.Share;
 import com.example.financeapp.modules.share.ShareRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,9 +23,9 @@ public class FinanceAppApplication {
     CommandLineRunner init(ShareRepository shareRepository
     ) {
         return args -> {
-            Share s1 = new Share("SAP", "test", 133.46, "tech");
+            Share s1 = new Share(424252L,"SAP",  "1", 133.46, "tech");
             shareRepository.save(s1);
-            Share s2 = new Share("BASF", "test", 55.32, "chemie");
+            Share s2 = new Share(52352523L,"BASF",  "2", 55.32, "chemie");
             shareRepository.save(s2);
         };
     }

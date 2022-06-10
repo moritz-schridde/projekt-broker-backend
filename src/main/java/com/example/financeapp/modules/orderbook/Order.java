@@ -73,5 +73,4 @@ public class Order {
     @Setter
     public static ArrayList<Order> orderBook;
 
-
 }
