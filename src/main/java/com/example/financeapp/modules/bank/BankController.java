@@ -18,7 +18,7 @@ public class BankController {
     }
 
     @GetMapping
-    public ResponseEntity<Bank> withdraw() throws Exception {
+    public ResponseEntity<Bank> getInformation() throws Exception {
         Bank dummyResponse = new Bank("DE640230807324872943", "mustermann", "max", 1000.00, "XX1HdW", "Verrechnungskonto", 74902649612431L);
         return ResponseEntity.ok(dummyResponse);
     }
