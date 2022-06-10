@@ -1,4 +1,4 @@
-package com.example.financeapp.modules.user;
+package com.example.financeapp.modules.depot;
 
 import com.sun.istack.NotNull;
 import lombok.Getter;
