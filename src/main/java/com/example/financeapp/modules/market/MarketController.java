@@ -18,12 +18,22 @@ public class MarketController {
     }
 
     @PostMapping
-    public ResponseEntity<String> freezeShareByID() {
-        return ResponseEntity.ok("Success");
+    public ResponseEntity<String> freezeShareByID(@RequestBody String shareId) {
+        boolean success = true;
+        if (success) {
+            return ResponseEntity.ok("Success");
+        } else {
+            return ResponseEntity.badRequest().body("Failed");
+        }
     }
 
     @DeleteMapping
-    public ResponseEntity<String> deleteFreezeSOfShareByID() {
-        return ResponseEntity.ok("Success");
+    public ResponseEntity<String> deleteFreezeSOfShareByID(@RequestBody String shareId) {
+        boolean success = true;
+        if (success) {
+            return ResponseEntity.ok("Success");
+        } else {
+            return ResponseEntity.badRequest().body("Failed");
+        }
     }
 }
