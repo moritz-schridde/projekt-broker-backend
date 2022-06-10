@@ -92,6 +92,11 @@ public class User {
     @Getter
     @Setter
     @NotNull
+    private String taxNumber;
+
+    @Getter
+    @Setter
+    @NotNull
     private int birthDay;
 
     @Getter
@@ -105,7 +110,7 @@ public class User {
     private int birthYear;
 
     @JsonCreator
-    public User(@JsonProperty("userId") @NotNull UUID id, @JsonProperty("name") @NotNull String name, @JsonProperty("surname") @NotNull String surname, @JsonProperty("email") @NotNull String email, @JsonProperty("password") @NotNull String password, @JsonProperty("phoneNumber") @NotNull int phoneNumber, @JsonProperty("street") @NotNull String street, @JsonProperty("houseNumber") @NotNull String houseNumber, @JsonProperty("postalCode") @NotNull String postalCode, @JsonProperty("city") @NotNull String city, @JsonProperty("country") @NotNull String country, @JsonProperty("birthDay") @NotNull String birthDay, @JsonProperty("birthMonth") @NotNull String birthMonth, @JsonProperty("birthYear") @NotNull String birthYear) {
+    public User(@JsonProperty("userId") @NotNull UUID id, @JsonProperty("name") @NotNull String name, @JsonProperty("surname") @NotNull String surname, @JsonProperty("email") @NotNull String email, @JsonProperty("password") @NotNull String password, @JsonProperty("phoneNumber") @NotNull int phoneNumber, @JsonProperty("street") @NotNull String street, @JsonProperty("houseNumber") @NotNull String houseNumber, @JsonProperty("postalCode") @NotNull String postalCode, @JsonProperty("city") @NotNull String city, @JsonProperty("country") @NotNull String country, @JsonProperty("taxnumber") @NotNull String taxNumber, @JsonProperty("birthDay") @NotNull String birthDay, @JsonProperty("birthMonth") @NotNull String birthMonth, @JsonProperty("birthYear") @NotNull String birthYear) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -117,6 +122,7 @@ public class User {
         this.postalCode = postalCode;
         this.city = city;
         this.country = country;
+        this.taxNumber = taxNumber;
         this.birthDay = Integer.parseInt(birthDay);
         this.birthMonth = Integer.parseInt(birthMonth);
         this.birthYear = Integer.parseInt(birthYear);

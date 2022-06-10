@@ -15,49 +15,48 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
-
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<User> getUser(@PathVariable("userId") UUID userId) {
-        return ResponseEntity.ok(userService.getUser(userId));
+    public ResponseEntity<String> getUser() {
+        return ResponseEntity.ok("Success");
     }
 
-    @PostMapping("/create")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Object> createUser(User user) throws URISyntaxException {
-        UUID created = userService.createUser(user);
+    public ResponseEntity<Object> createUser(@RequestBody String name, @RequestBody String surname, @RequestBody String email, @RequestBody String phoneNumber, @RequestBody String street, @RequestBody String houseNumber, @RequestBody String postalCode, @RequestBody String city, @RequestBody String country, @RequestBody String taxNumber, @RequestBody String birhtDay, @RequestBody String birhtMonth, @RequestBody String birthYear) throws URISyntaxException {
+        Boolean created = true;
         if (created != null) {
             URI uri = new URIBuilder()
                     .addParameter("scheme", "https")
                     .addParameter("host", "api.trade-empire.karottenkameraden.de")
                     .addParameter("path", "/user/create/" + created)
                     .build();
-            return ResponseEntity.created(uri).build();
+            return ResponseEntity.created(uri).body("Success");
         } else {
-            return ResponseEntity.badRequest().body("User already exists or the input is invalid");
+            return ResponseEntity.badRequest().body("Failed");
         }
     }
 
-    @PutMapping("/{userId}")
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> updateUser(@PathVariable("userId") UUID userId, User user) {
-        boolean updated = userService.updateUser(userId, user);
+    public ResponseEntity<Object> updateUser(@RequestBody String name, @RequestBody String surname, @RequestBody String email, @RequestBody String phoneNumber, @RequestBody String street, @RequestBody String houseNumber, @RequestBody String postalCode, @RequestBody String city, @RequestBody String country, @RequestBody String taxNumber, @RequestBody String birhtDay, @RequestBody String birhtMonth, @RequestBody String birthYear) {
+        boolean updated = true;
         if (updated) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body("Success");
         } else {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.status(409).body("Failed");
         }
     }
 
-    @DeleteMapping("{userId}")
+    @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> deleteUser(@PathVariable("userId") UUID userId) {
         boolean deleted = userService.deleteUser(userId);
-        return (deleted) ? ResponseEntity.ok().build() : ResponseEntity.noContent().build();
+        return (deleted) ? ResponseEntity.ok().body("Success") : ResponseEntity.badRequest().body("Failed");
     }
 }
