@@ -1,9 +1,14 @@
 package com.example.financeapp;
 
+
 import com.example.financeapp.modules.bank.Bank;
 import com.example.financeapp.modules.bank.BankRepository;
+import com.example.financeapp.modules.orderbook.Order;
+import com.example.financeapp.modules.orderbook.OrderRepository;
+
 import com.example.financeapp.modules.share.Share;
 import com.example.financeapp.modules.share.ShareRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +19,7 @@ public class FinanceAppApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(FinanceAppApplication.class, args);
+
     }
 
     @Bean
