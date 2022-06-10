@@ -1,7 +1,6 @@
 package com.example.financeapp.user;
 
 import com.example.financeapp.modules.user.User;
-import com.example.financeapp.modules.user.id.UserId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
@@ -22,8 +21,10 @@ public class UserTest {
     @Test
     void testSerialization() throws IOException {
         UUID uuid = UUID.randomUUID();
-        System.out.println(new UserId(uuid));
-        User user = new User(new UserId(uuid), "name", "surname", "pwd", "email@mail.com", 12345, "street", "12", "12345", "city", "country", "1", "2", "1995" );
+        System.out.println(uuid);
+        User user = new User("name", "surname", "email@mail.com",
+                12345, "street", "12", "12345", "city", "country",
+                "1", "2", "1995" );
         JsonContent<User> content = tester.write(user);
         assertThat(content).hasJsonPathStringValue("userId", uuid.toString());
 
