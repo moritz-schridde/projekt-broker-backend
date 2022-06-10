@@ -13,12 +13,12 @@ import java.util.ArrayList;
 public class OrderController {
 
     @GetMapping
-    public ResponseEntity<ArrayList<Order>> findAllOrders() {
-        ArrayList<Order> dummyOrderList = new ArrayList<>();
-        dummyOrderList.add(new Order());
-        dummyOrderList.add(new Order());
-        dummyOrderList.add(new Order());
-        dummyOrderList.add(new Order());
+    public ResponseEntity<ArrayList<OrderResponse>> findAllOrders() {
+        ArrayList<OrderResponse> dummyOrderList = new ArrayList<>();
+        dummyOrderList.add(new OrderResponse());
+        dummyOrderList.add(new OrderResponse());
+        dummyOrderList.add(new OrderResponse());
+        dummyOrderList.add(new OrderResponse());
         return ResponseEntity.ok(dummyOrderList);
     }
 

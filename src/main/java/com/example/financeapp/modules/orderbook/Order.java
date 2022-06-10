@@ -29,13 +29,9 @@ public class Order {
     @Setter
     private long depotId;
 
-    enum State{
-        OPEN, CLOSED
-    }
-
     @Getter
     @Setter
-    private State state;
+    private OrderEnums.State state;
 
     @Getter
     @Setter
@@ -45,21 +41,13 @@ public class Order {
     @Setter
     private Timestamp timestamp;
 
-    enum OfferType{
-        BUY, SELL
-    }
+    @Getter
+    @Setter
+    private OrderEnums.OfferType offerType;
 
     @Getter
     @Setter
-    private OfferType offerType;
-
-    enum OrderType{
-        MARKETORDER, LIMITORDER, STOPORDER
-    }
-
-    @Getter
-    @Setter
-    private OrderType orderType;
+    private OrderEnums.OrderType orderType;
 
     @Getter
     @Setter

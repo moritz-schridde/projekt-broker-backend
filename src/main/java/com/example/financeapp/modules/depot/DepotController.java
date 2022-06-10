@@ -21,12 +21,9 @@ public class DepotController {
     }
 
     @GetMapping
-    public ResponseEntity<HashMap> getSharesFromDepot() {
-        HashMap<String, Integer> shareList = new HashMap<>();
-        shareList.put("4141243132", 20);
-        shareList.put("74192641", 40);
-        shareList.put("87148014", 30);
-        shareList.put("5782598732059", 50);
+    public ResponseEntity<ArrayList<DepotResponse>> getSharesFromDepot() {
+        ArrayList<DepotResponse> shareList = new ArrayList<>();
+        shareList.add(new DepotResponse());
         return ResponseEntity.ok(shareList);
     }
 }

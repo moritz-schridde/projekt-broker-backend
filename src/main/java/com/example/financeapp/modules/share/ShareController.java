@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -24,8 +25,10 @@ public class ShareController {
     }
 
     @GetMapping("/performance")
-    public ResponseEntity<List> getSharePrices() throws Exception {
-        return ResponseEntity.ok(shareService.getSharePrices());
+    public ResponseEntity<ArrayList<PerformanceResponse>> getSharePrices() {
+        ArrayList<PerformanceResponse> performance = new ArrayList<>();
+        performance.add(new PerformanceResponse());
+        return ResponseEntity.ok(performance);
     }
 
     @GetMapping("/search")
