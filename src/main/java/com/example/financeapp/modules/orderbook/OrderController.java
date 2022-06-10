@@ -22,7 +22,7 @@ public class OrderController {
 
 
     @PostMapping
-    public ResponseEntity<String> createOrder(@RequestBody @Valid OrderCreateRequest createRequest){
+    public ResponseEntity<String> createOrder(@RequestBody @Valid OrderCreateRequest createRequest) {
         boolean success = true;
         if (success) {
             return ResponseEntity.ok("Success");

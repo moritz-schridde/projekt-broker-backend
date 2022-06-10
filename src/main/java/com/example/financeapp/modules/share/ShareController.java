@@ -33,7 +33,7 @@ public class ShareController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Share>> findAllShareByCategory(@PathVariable String category) throws Exception {
+    public ResponseEntity<List<Share>> findAllShareByCategory(@RequestBody String category, @RequestBody String name) throws Exception {
         return ResponseEntity.ok(shareService.findAllShareByCategory(category));
     }
 
