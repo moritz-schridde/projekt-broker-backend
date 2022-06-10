@@ -22,8 +22,8 @@ public class UserController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> getUser() {
-        return ResponseEntity.ok("Success");
+    public ResponseEntity<User> getUser() {
+        return ResponseEntity.ok(new User());
     }
 
     @PostMapping
