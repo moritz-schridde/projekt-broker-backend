@@ -29,6 +29,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### Ressources ###
+/src/main/resources/firebase_config.json
+
 ### VS Code ###
 .vscode/
 # Compiled class file
