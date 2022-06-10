@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/market")
 public class MarketController {
+    @Autowired
     public MarketController() {
 
     }
