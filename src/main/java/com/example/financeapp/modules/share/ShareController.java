@@ -46,6 +46,12 @@ public class ShareController {
         return ResponseEntity.ok(shareService.findAllShareByCategory(category));
     }
 
+    @PostMapping("/{id}")
+    public ResponseEntity postShare(@RequestHeader Share share) throws Exception {
+        shareService.postShare(share.getName(), share.getWkn(), share.getPrice(), share.getCategory());
+        return ResponseEntity.ok("Order deleted Successfully");
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity deleteMatchedOrder(@PathVariable Long id) throws Exception {
         shareService.deleteOrder(id);
