@@ -23,6 +23,12 @@ public class ShareServiceImplementation implements ShareService {
     }
 
     @Override
+    public Share findShare(Long id) throws Exception {
+        Share share = shareRepository.getShareById(id);
+        return share;
+    }
+
+    @Override
     public List getSharePrices() throws Exception {
         List<Share> shares = new ArrayList<Share>();
         List<Double> prices = new ArrayList<Double>();

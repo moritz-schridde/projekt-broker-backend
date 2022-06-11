@@ -4,6 +4,7 @@ import java.util.List;
 
 public interface ShareService {
     List<Share> findAllShare() throws Exception;
+    Share findShare(Long id) throws Exception;
     List getSharePrices() throws Exception;
     List getSharePrice(Long id) throws Exception;
     List<Share> findAllShareByCategory(String category) throws Exception;
