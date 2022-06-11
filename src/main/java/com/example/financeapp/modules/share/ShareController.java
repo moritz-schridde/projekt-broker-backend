@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -33,9 +34,18 @@ public class ShareController {
         return ResponseEntity.ok(shareService.getSharePrice(id));
     }
 
-    @GetMapping("/category/{category}")
-    public ResponseEntity<List<Share>> findAllShareByCategory(@PathVariable String category) throws Exception {
-        return ResponseEntity.ok(shareService.findAllShareByCategory(category));
+    @GetMapping("/search")
+    public ResponseEntity<List<Share>> findAllShareBySearch(@RequestHeader SearchRequest search) throws Exception {
+        if(search.getCategory() != null && search.getName() == null) {
+            return ResponseEntity.ok(shareService.findAllShareByCategory(search.getCategory()));
+        }
+        else if(search.getCategory() == null && search.getName() != null) {
+            return ResponseEntity.ok(shareService.findAllShareByName(search.getName()));
+        }
+        else {
+            List<Share> shares = new ArrayList<Share>();
+            return ResponseEntity.ok(shares);
+        }
     }
 
     @DeleteMapping("/{id}")

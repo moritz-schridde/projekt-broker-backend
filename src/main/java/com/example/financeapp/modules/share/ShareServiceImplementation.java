@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Component
@@ -20,7 +22,19 @@ public class ShareServiceImplementation implements ShareService {
     @Override
     public List<Share> findAllShare() throws Exception {
 
-        return shareRepository.findAll();
+        List<Share> shares = new ArrayList<Share>();
+        shares = shareRepository.findAll();
+
+        Collections.sort(shares, new Comparator() {
+            @Override
+            public int compare(Object shareOne, Object shareTwo) {
+                //use instanceof to verify the references are indeed of the type in question
+                return ((Share)shareOne).getName()
+                        .compareTo(((Share)shareTwo).getName());
+            }
+        });
+
+        return shares;
     }
 
     @Override
@@ -48,6 +62,15 @@ public class ShareServiceImplementation implements ShareService {
     public List<Share> findAllShareByCategory(String category) throws Exception {
         List<Share> shares = new ArrayList<Share>();
         shares = shareRepository.findAllByCategory(category);
+
+        return shares;
+    }
+
+    @Override
+    public List<Share> findAllShareByName(String name) throws Exception {
+        List<Share> shares = new ArrayList<Share>();
+        shares = shareRepository.findAll();
+        shares.removeIf(s -> !s.getName().contains(name));
 
         return shares;
     }
