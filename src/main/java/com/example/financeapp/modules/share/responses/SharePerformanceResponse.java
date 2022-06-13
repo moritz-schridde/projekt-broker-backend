@@ -5,7 +5,7 @@ import lombok.Setter;
 
 import java.sql.Timestamp;
 
-public class PerformanceResponse {
+public class SharePerformanceResponse {
 
     @Getter
     @Setter
