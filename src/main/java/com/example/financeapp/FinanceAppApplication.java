@@ -1,5 +1,9 @@
 package com.example.financeapp;
 
+
+import com.example.financeapp.modules.bank.Bank;
+import com.example.financeapp.modules.bank.BankRepository;
+
 import com.example.financeapp.modules.depot.Depot;
 import com.example.financeapp.modules.depot.DepotRepository;
 import com.example.financeapp.modules.share.Share;
@@ -18,15 +22,16 @@ public class FinanceAppApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(FinanceAppApplication.class, args);
+
     }
 
     @Bean
     CommandLineRunner init(ShareRepository shareRepository, UserRepository userRepository,
                            DepotRepository depotRepository, DepoShareAmountRepository depoShareAmountRepository) {
         return args -> {
-            Share s1 = new Share("SAP", "test", 133.46, "tech");
+            Share s1 = new Share(424252L,"SAP",  "1", 133.46, "tech");
             shareRepository.save(s1);
-            Share s2 = new Share("BASF", "test", 55.32, "chemie");
+            Share s2 = new Share(52352523L,"BASF",  "2", 55.32, "chemie");
             shareRepository.save(s2);
             User u = new User("name", "surname", "email@mail.com", 12345,
                     "street", "12", "12345", "city", "country",
@@ -41,6 +46,15 @@ public class FinanceAppApplication {
             userRepository.save(u);
             depoShareAmountRepository.save(dsa);
 
+        };
+    }
+
+    @Bean
+    CommandLineRunner init2(BankRepository bankRepository
+    ) {
+        return args -> {
+            Bank b1 = new Bank("DE89370400440532013000", "Klaus", "Mayer", 25.5, "MANSDE66XXX", "blub", 1);
+            bankRepository.save(b1);
         };
     }
 }
