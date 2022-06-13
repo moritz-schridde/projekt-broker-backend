@@ -3,8 +3,6 @@ package com.example.financeapp;
 
 import com.example.financeapp.modules.bank.Bank;
 import com.example.financeapp.modules.bank.BankRepository;
-import com.example.financeapp.modules.orderbook.Order;
-import com.example.financeapp.modules.orderbook.OrderRepository;
 
 import com.example.financeapp.modules.share.Share;
 import com.example.financeapp.modules.share.ShareRepository;
