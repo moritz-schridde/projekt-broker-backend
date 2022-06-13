@@ -1,9 +1,11 @@
 package com.example.financeapp.modules.share;
 
+import com.example.financeapp.modules.share.responses.PerformanceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,25 +25,36 @@ public class ShareController {
         return ResponseEntity.ok(shareService.findAllShare());
     }
 
-    @GetMapping("/price")
-    public ResponseEntity<List> getSharePrices() throws Exception {
-        return ResponseEntity.ok(shareService.getSharePrices());
+    @GetMapping("/performance")
+    public ResponseEntity<ArrayList<PerformanceResponse>> getSharePrices() {
+        ArrayList<PerformanceResponse> performance = new ArrayList<>();
+        performance.add(new PerformanceResponse());
+        return ResponseEntity.ok(performance);
     }
 
-    @GetMapping("/price/{id}")
-    public ResponseEntity<List> getSharePrice(@PathVariable Long id) throws Exception {
-        return ResponseEntity.ok(shareService.getSharePrice(id));
-    }
-
-    @GetMapping("/category/{category}")
-    public ResponseEntity<List<Share>> findAllShareByCategory(@PathVariable String category) throws Exception {
+    @GetMapping("/search")
+    public ResponseEntity<List<Share>> findAllShareByCategory(@RequestBody String category, @RequestBody String name) throws Exception {
         return ResponseEntity.ok(shareService.findAllShareByCategory(category));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity deleteMatchedOrder(@PathVariable Long id) throws Exception {
-        shareService.deleteOrder(id);
-        return ResponseEntity.ok("Order deleted Successfully");
+    @PostMapping
+    public ResponseEntity<String> addNewShare(@RequestBody Long shareId) throws Exception {
+        boolean success = true;
+        if(success) {
+            return ResponseEntity.ok("Success");
+        } else {
+            return ResponseEntity.badRequest().body("Failed");
+        }
+    }
+    @DeleteMapping
+    public ResponseEntity<String> deleteShareById(@RequestBody Long shareId) throws Exception {
+        boolean success = true;
+        shareService.deleteOrder(shareId);
+        if(success) {
+            return ResponseEntity.ok("Success");
+        } else {
+            return ResponseEntity.badRequest().body("Failed");
+        }
     }
 
 }

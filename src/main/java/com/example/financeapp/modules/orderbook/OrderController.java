@@ -1,31 +1,52 @@
 package com.example.financeapp.modules.orderbook;
 
-import com.example.financeapp.modules.account.Account;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.RequestEntity;
+import com.example.financeapp.modules.orderbook.requests.OrderCreateRequest;
+import com.example.financeapp.modules.orderbook.requests.OrderUpdateRequest;
+import com.example.financeapp.modules.orderbook.responses.OrderResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/order")
 public class OrderController {
 
-    @Autowired
-    OrderService orderService;
-
     @GetMapping
-    public ResponseEntity<List<Order>> findAllOrders() {
-        return ResponseEntity.ok(orderService.findAllOrders());
+    public ResponseEntity<ArrayList<OrderResponse>> findAllOrders() {
+        ArrayList<OrderResponse> dummyOrderList = new ArrayList<>();
+        dummyOrderList.add(new OrderResponse());
+        return ResponseEntity.ok(dummyOrderList);
     }
 
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody @Valid Order request){
-        Order order = orderService.createOrder(request);
-        return ResponseEntity.ok(order);
+    public ResponseEntity<String> createOrder(@RequestBody @Valid OrderCreateRequest createRequest) {
+        boolean success = true;
+        if (success) {
+            return ResponseEntity.ok("Success");
+        } else {
+            return ResponseEntity.badRequest().body("Failed");
+        }
     }
 
+    @PutMapping
+    public ResponseEntity<String> updateOrder(@RequestBody @Valid OrderUpdateRequest updateRequest) {
+        boolean success = true;
+        if (success) {
+            return ResponseEntity.ok("Success");
+        } else {
+            return ResponseEntity.badRequest().body("Failed");
+        }
+    }
+
+    @DeleteMapping ResponseEntity<String> deleteOrder(@RequestBody String[] orderId) {
+        boolean success = true;
+        if (success) {
+            return ResponseEntity.ok("Success");
+        } else {
+            return ResponseEntity.badRequest().body("Failed");
+        }
+    }
 }
