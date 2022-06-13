@@ -1,4 +1,4 @@
-package com.example.financeapp.modules.user;
+package com.example.financeapp.modules.depot;
 
 import com.example.financeapp.modules.depot.Depot;
 import com.example.financeapp.modules.share.Share;

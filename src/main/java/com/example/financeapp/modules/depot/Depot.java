@@ -1,7 +1,5 @@
 package com.example.financeapp.modules.depot;
 
-import com.example.financeapp.modules.share.Share;
-import com.example.financeapp.modules.user.DepoShareAmount;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,7 +36,7 @@ public class Depot {
 
     }
 
-    public String getShareInformation() {
+    /*public String getShareInformation() {
         return "";
     }
     public String buy() {
@@ -49,6 +47,6 @@ public class Depot {
     }
     public String getPerformance() {
         return "";
-    }
+    }*/
 }
 
