@@ -23,25 +23,25 @@ public class ShareController {
         return ResponseEntity.ok(shareService.findAllShare());
     }
 
-    @GetMapping("/price")
-    public ResponseEntity<List> getSharePrices() throws Exception {
-        return ResponseEntity.ok(shareService.getSharePrices());
-    }
-
-    @GetMapping("/price/{id}")
+    @GetMapping("/{id}/performance")
     public ResponseEntity<List> getSharePrice(@PathVariable Long id) throws Exception {
         return ResponseEntity.ok(shareService.getSharePrice(id));
     }
 
-    @GetMapping("/category/{category}")
+    @GetMapping("/search")
     public ResponseEntity<List<Share>> findAllShareByCategory(@PathVariable String category) throws Exception {
         return ResponseEntity.ok(shareService.findAllShareByCategory(category));
+    }
+
+    @PostMapping
+    public ResponseEntity createNewShare() throws Exception {
+        return ResponseEntity.ok("Success");
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteMatchedOrder(@PathVariable Long id) throws Exception {
         shareService.deleteOrder(id);
-        return ResponseEntity.ok("Order deleted Successfully");
+        return ResponseEntity.ok("Success");
     }
 
 }
