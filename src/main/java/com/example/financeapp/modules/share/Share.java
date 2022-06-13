@@ -40,4 +40,8 @@ public class Share {
         this.price = price;
         this.category = category;
     }
+
+    public Share () {
+
+    }
 }
