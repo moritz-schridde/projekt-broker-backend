@@ -51,7 +51,7 @@ public class Order {
 
     @Getter
     @Setter
-    double MaxMinPreis; //nur wenn keine Marketorder
+    double maxMinPreis;
 
     @Getter
     @Setter
