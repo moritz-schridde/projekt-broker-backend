@@ -4,13 +4,12 @@ import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
 @Entity
+@Table(name="Orders")
 public class Order {
 
     //attributes
@@ -29,14 +28,6 @@ public class Order {
     @Setter
     private long depotId;
 
-    enum State{
-        OPEN, CLOSED
-    }
-
-    @Getter
-    @Setter
-    private State state;
-
     @Getter
     @Setter
     private int count;
@@ -45,21 +36,23 @@ public class Order {
     @Setter
     private Timestamp timestamp;
 
-    enum OfferType{
-        BUY, SELL
-    }
 
-    @Getter
-    @Setter
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "enum('OPEN', 'CLOSED')")
+    @NotNull
+    private State state;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "enum('BUY', 'SELL')")
+    @NotNull
     private OfferType offerType;
 
-    enum OrderType{
-        MARKETORDER, LIMITORDER, STOPORDER
-    }
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "enum('MARKETORDER', 'LIMITORDER','STOPORDER')")
+    @NotNull
+    private  OrderType orderType;
 
-    @Getter
-    @Setter
-    private OrderType orderType;
 
     @Getter
     @Setter
@@ -72,6 +65,73 @@ public class Order {
     @Getter
     @Setter
     public static ArrayList<Order> orderBook;
+
+
+    public Order(long id, long shareId, long depotId, int count, Timestamp timestamp, State state,
+                 OfferType offerType, OrderType orderType, double maxMinPreis) {
+        this.id = id;
+        this.shareId = shareId;
+        this.depotId = depotId;
+        this.count = count;
+        this.timestamp = timestamp;
+        this.state = state;
+        this.offerType = offerType;
+        this.orderType = orderType;
+        MaxMinPreis = maxMinPreis;
+    }
+
+    public Order(long id, long shareId, long depotId, int count, Timestamp timestamp, double maxMinPreis) {
+        this.id = id;
+        this.shareId = shareId;
+        this.depotId = depotId;
+        this.count = count;
+        this.timestamp = timestamp;
+        MaxMinPreis = maxMinPreis;
+    }
+
+    public Order (){};
+
+    public enum State{
+        OPEN, CLOSED
+    }
+    public enum OrderType{
+        MARKETORDER, LIMITORDER, STOPORDER
+    }
+    public enum OfferType{
+        BUY, SELL
+    }
+
+    @Enumerated(EnumType.STRING)
+    public State getState(){
+        return state;
+    }
+
+    @Enumerated(EnumType.STRING)
+    public void setState(State state){
+        this.state = state;
+    }
+
+    @Enumerated(EnumType.STRING)
+    public OrderType getOrderType(){
+        return orderType;
+    }
+
+    @Enumerated(EnumType.STRING)
+    public void setOrderType(OrderType orderType){
+        this.orderType = orderType;
+    }
+
+    @Enumerated(EnumType.STRING)
+    public OfferType getOfferType(){
+        return offerType;
+    }
+
+    @Enumerated(EnumType.STRING)
+    public void setOfferType(OfferType offerType){
+        this.offerType = offerType;
+    }
+
+
 
 
 }

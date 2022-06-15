@@ -23,6 +23,16 @@ public class OrderServiceImpl implements OrderService{
         orders.forEach(order -> orderResponse.add(order));
         return orderResponse;
     }
+
+
+    @Override
+    public void deleteOrder(long id) {
+        try {
+            Order order = orderRepository.getOrderById(id);
+            orderRepository.delete(order);
+        }catch (Exception e){e.printStackTrace();}
+    }
+
     //declare and initialize needed Lists
     ArrayList<Order> sellOrders= new ArrayList<>();
     ArrayList<Order> buyOrders=new ArrayList<>();
@@ -41,9 +51,9 @@ public class OrderServiceImpl implements OrderService{
         //if not then load and sort into lists accordingly
         if(Order.reloadOrderbook){
 
-            buyMarket = orderRepository.findAllByStateAndOfferTypeAndOrderTypeAAndShareIdOrderByTimestamp(Order.State.OPEN, Order.OrderType.MARKETORDER, Order.OfferType.BUY, shareId);
+            buyMarket = orderRepository.findAllByStateAndOfferTypeAndOrderTypeAndShareIdOrderByTimestamp(Order.State.OPEN, Order.OrderType.MARKETORDER, Order.OfferType.BUY, shareId);
 
-            sellMarket= orderRepository.findAllByStateAndOfferTypeAndOrderTypeAAndShareIdOrderByTimestamp(Order.State.OPEN, Order.OrderType.MARKETORDER, Order.OfferType.SELL, shareId);
+            sellMarket= orderRepository.findAllByStateAndOfferTypeAndOrderTypeAndShareIdOrderByTimestamp(Order.State.OPEN, Order.OrderType.MARKETORDER, Order.OfferType.SELL, shareId);
 
             //TODO die anderen Listen vervollständigen 
 
@@ -78,6 +88,7 @@ public class OrderServiceImpl implements OrderService{
 
 
         //TODO den einkommenden request richtig einordnen
+
         if (request.getOfferType() == Order.OfferType.BUY) {
             buyOrders.add(request);
         }

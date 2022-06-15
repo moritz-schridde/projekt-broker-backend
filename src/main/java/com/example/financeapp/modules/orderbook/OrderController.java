@@ -28,4 +28,9 @@ public class OrderController {
         return ResponseEntity.ok(order);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteOrder(@PathVariable Long id) throws Exception {
+        orderService.deleteOrder(id);
+        return ResponseEntity.ok("Order deleted Successfully");
+    }
 }
