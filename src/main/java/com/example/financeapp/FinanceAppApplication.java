@@ -26,6 +26,12 @@ public class FinanceAppApplication {
             shareRepository.save(s1);
             Share s2 = new Share("BASF", "test", 55.32, "chemie");
             shareRepository.save(s2);
+
+
+           // Order buyOrder1 = new Order(1, )
+
+
+
         };
     }
 }

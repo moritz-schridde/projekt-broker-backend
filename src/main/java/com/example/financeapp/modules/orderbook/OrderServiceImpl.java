@@ -1,11 +1,13 @@
 package com.example.financeapp.modules.orderbook;
 
+import com.example.financeapp.modules.share.Share;
 import com.example.financeapp.modules.share.ShareRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class OrderServiceImpl implements OrderService{
@@ -198,6 +200,7 @@ public class OrderServiceImpl implements OrderService{
 
 
     public void executeOrder(double refP, long firstOrderId, long secondOrderId){
+        //TODO geld abbuchen Aktein transferieren
         //geld vom depot abbuchen
         //aktien vom Verkäufer abziehen und dem Käufer gutschreiben
 
@@ -208,7 +211,13 @@ public class OrderServiceImpl implements OrderService{
     }
 
 
-    public void setNewSharePrice(long shareId, double price){
+    public void setNewSharePrice(long shareId, double price) {
+        try {
+            Share share = shareRepository.findById(shareId).orElseThrow(()-> new Exception("share not found"));
+            share.setPrice(price);
+            shareRepository.save(share);
+        }catch (Exception e ){e.printStackTrace();}
+
 
     }
 

@@ -44,7 +44,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/webjars/**",
             // -- Swagger UI v3 (OpenAPI)
             "/v3/api-docs/**",
-            "/swagger-ui/**"
+            "/swagger-ui/**",
+            "/h2-console/**",
+            "/h2**"
+
             // other public endpoints of your API may be appended to this array
     };
 
@@ -98,5 +101,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated().and()
                 //.addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 //.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
     }
 }
