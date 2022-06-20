@@ -23,6 +23,12 @@ public class ShareServiceImplementation implements ShareService {
     }
 
     @Override
+    public Share findShare(Long id) throws Exception {
+        Share share = shareRepository.getShareById(id);
+        return share;
+    }
+
+    @Override
     public List getSharePrices() throws Exception {
         List<Share> shares = new ArrayList<Share>();
         List<Double> prices = new ArrayList<Double>();
@@ -49,6 +55,12 @@ public class ShareServiceImplementation implements ShareService {
         shares = shareRepository.findAllByCategory(category);
 
         return shares;
+    }
+
+    @Override
+    public void postShare(String name, String wkn, double price, String category) throws Exception {
+        Share share = new Share(name, wkn, price, category);
+        shareRepository.save(share);
     }
 
     @Override
