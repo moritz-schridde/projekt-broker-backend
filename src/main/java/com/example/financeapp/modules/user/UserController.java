@@ -4,6 +4,7 @@ import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -21,16 +22,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/me")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<User> getUser(@PathVariable("userId") UUID userId) {
-        return ResponseEntity.ok(userService.getUser(userId));
+    public ResponseEntity<User> getUser() {
+        String email = getCurrentUsersEmail();
+        return ResponseEntity.ok(userService.getUserByEmail(email));
     }
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Object> createUser(User user) throws URISyntaxException {
-        UUID created = userService.createUser(user);
+    public ResponseEntity<Object> createUser(@RequestBody UserCreateRequest userCreateRequest) throws URISyntaxException {
+        UUID created = userService.createUser(userCreateRequest);
         if (created != null) {
             URI uri = new URIBuilder()
                     .addParameter("scheme", "https")
@@ -43,10 +45,11 @@ public class UserController {
         }
     }
 
-    @PutMapping("/{userId}")
+    @PutMapping("/me")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> updateUser(@PathVariable("userId") UUID userId, User user) {
-        boolean updated = userService.updateUser(userId, user);
+    public ResponseEntity<Object> updateUser(@RequestBody UserUpdateRequest userUpdateRequest) {
+        User user = userService.getUserByEmail(getCurrentUsersEmail());
+        boolean updated = userService.updateUser(user, userUpdateRequest);
         if (updated) {
             return ResponseEntity.ok().build();
         } else {
@@ -54,10 +57,16 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("{userId}")
+    @DeleteMapping("/me")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> deleteUser(@PathVariable("userId") UUID userId) {
-        boolean deleted = userService.deleteUser(userId);
+    public ResponseEntity<Object> deleteUser() {
+        String email = getCurrentUsersEmail();
+        boolean deleted = userService.deleteUser(userService.getUserByEmail(email));
         return (deleted) ? ResponseEntity.ok().build() : ResponseEntity.noContent().build();
+    }
+
+    private String getCurrentUsersEmail() {
+        return ((com.example.financeapp.auth.models.User) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal()).getEmail();
     }
 }

@@ -22,7 +22,9 @@ public class UserTest {
     void testSerialization() throws IOException {
         UUID uuid = UUID.randomUUID();
         System.out.println(uuid);
-        User user = new User(uuid, "name", "surname", "pwd", "email@mail.com", 12345, "street", "12", "12345", "city", "country", "1", "2", "1995" );
+        User user = new User("name", "surname", "email@mail.com",
+                12345, "street", "12", "12345", "city", "country",
+                "1", "2", "1995" );
         JsonContent<User> content = tester.write(user);
         assertThat(content).hasJsonPathStringValue("userId", uuid.toString());
 

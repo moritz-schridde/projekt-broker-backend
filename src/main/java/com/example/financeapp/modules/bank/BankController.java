@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/bank")
+@RequestMapping("/user/bank")
 public class BankController {
 
     private final BankService bankService;
@@ -17,19 +17,30 @@ public class BankController {
         this.bankService = bankService;
     }
 
-    @GetMapping("/{iban}")
-    public ResponseEntity<Bank> withdraw(@PathVariable("iban") String iban) throws Exception {
-        return ResponseEntity.ok(bankService.getBank(iban));
+    @GetMapping
+    public ResponseEntity<Bank> getInformation() throws Exception {
+        Bank dummyResponse = new Bank("DE640230807324872943", "mustermann", "max", 1000.00, "XX1HdW", "Verrechnungskonto", 74902649612431L);
+        return ResponseEntity.ok(dummyResponse);
     }
 
-    @PostMapping("/{iban}/withdraw")
-    public ResponseEntity<Bank> withdraw(@PathVariable("iban") String iban, @RequestBody double amount) throws Exception {
-        return ResponseEntity.ok(bankService.changeAmount(iban, amount, Bank.mode.WITHDRAW));
+    @PostMapping("/withdraw")
+    public ResponseEntity<String> withdraw(@RequestBody double amount) throws Exception {
+        Boolean success = true;
+        if (success) {
+            return ResponseEntity.ok("Success");
+        } else {
+            return ResponseEntity.badRequest().body("Failed");
+        }
     }
 
-    @PostMapping("/{iban}/deposit")
-    public ResponseEntity<Bank> deposit(@PathVariable("iban") String iban, @RequestBody double amount) throws Exception {
-        return ResponseEntity.ok(bankService.changeAmount(iban, amount, Bank.mode.DEPOSIT));
+    @PostMapping("/deposit")
+    public ResponseEntity<String> deposit(@RequestBody double amount) throws Exception {
+        Boolean success = true;
+        if (success) {
+            return ResponseEntity.ok("Success");
+        } else {
+            return ResponseEntity.badRequest().body("Failed");
+        }
     }
 
 }
