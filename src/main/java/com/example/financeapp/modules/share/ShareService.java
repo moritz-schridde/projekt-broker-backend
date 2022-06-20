@@ -8,6 +8,6 @@ public interface ShareService {
     List getSharePrices() throws Exception;
     List getSharePrice(Long id) throws Exception;
     List<Share> findAllShareByCategory(String category) throws Exception;
-    void postShare(String name, String wkn, double price, String category) throws Exception;
+    void postShare(String name, String wkn, byte iconId, double price, String category) throws Exception;
     void deleteOrder(Long id) throws Exception;
 }
