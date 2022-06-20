@@ -9,7 +9,15 @@ public class DepotResponse {
 
     @Getter
     @Setter
-    private double currentShareValue;
+    private String shareId;
+
+    @Getter
+    @Setter
+    private int shareAmount;
+
+    @Getter
+    @Setter
+    private double shareValue;
 
     @Getter
     @Setter

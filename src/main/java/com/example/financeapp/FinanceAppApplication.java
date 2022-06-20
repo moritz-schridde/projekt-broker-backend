@@ -12,6 +12,7 @@ import com.example.financeapp.modules.depot.DepoShareAmount;
 import com.example.financeapp.modules.depot.DepoShareAmountRepository;
 import com.example.financeapp.modules.user.User;
 import com.example.financeapp.modules.user.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,9 +30,9 @@ public class FinanceAppApplication {
     CommandLineRunner init(ShareRepository shareRepository, UserRepository userRepository,
                            DepotRepository depotRepository, DepoShareAmountRepository depoShareAmountRepository) {
         return args -> {
-            Share s1 = new Share(424252L,"SAP",  "1", 133.46, "tech");
+            Share s1 = new Share(134112L,"SAP", (byte) 1, 133.46, "tech");
             shareRepository.save(s1);
-            Share s2 = new Share(52352523L,"BASF",  "2", 55.32, "chemie");
+            Share s2 = new Share(1213141L, "BASF", (byte) 2, 55.32, "chemie");
             shareRepository.save(s2);
             User u = new User("name", "surname", "email@mail.com", 12345,
                     "street", "12", "12345", "city", "country",

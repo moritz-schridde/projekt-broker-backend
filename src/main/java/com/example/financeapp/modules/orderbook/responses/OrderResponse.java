@@ -9,11 +9,19 @@ import java.sql.Timestamp;
 public class OrderResponse {
     @Getter
     @Setter
+    private Long orderId;
+
+    @Getter
+    @Setter
     private String shareName;
 
     @Getter
     @Setter
-    private double currentShareValue;
+    private double shareValue;
+
+    @Getter
+    @Setter
+    private double buySellValue;
 
     @Getter
     @Setter

@@ -23,5 +23,5 @@ public class OrderUpdateRequest {
 
     @Getter
     @Setter
-    double price; //nur wenn keine Marketorder
+    double price;
 }
