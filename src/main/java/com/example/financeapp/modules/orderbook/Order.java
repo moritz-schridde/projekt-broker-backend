@@ -53,7 +53,6 @@ public class Order {
     @NotNull
     private  OrderType orderType;
 
-
     @Getter
     @Setter
     double MaxMinPreis; //nur wenn keine Marketorder

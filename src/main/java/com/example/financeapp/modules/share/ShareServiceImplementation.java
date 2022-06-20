@@ -18,8 +18,7 @@ public class ShareServiceImplementation implements ShareService {
 
 
     @Override
-    public List<Share> findAllShare() throws Exception {
-
+    public List<Share> findAllShare() {
         return shareRepository.findAll();
     }
 
