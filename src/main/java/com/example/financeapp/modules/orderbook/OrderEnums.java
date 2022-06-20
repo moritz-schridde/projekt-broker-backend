@@ -1,13 +1,13 @@
 package com.example.financeapp.modules.orderbook;
 
 public class OrderEnums {
-    enum OfferType{
+    public enum OfferType{
         BUY, SELL
     }
-    enum OrderType{
+    public enum OrderType{
         MARKETORDER, LIMITORDER, STOPORDER
     }
-    enum State{
+    public enum State{
         OPEN, CLOSED, PENDING
     }
 }
