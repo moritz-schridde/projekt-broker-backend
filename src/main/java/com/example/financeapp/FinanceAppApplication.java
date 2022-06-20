@@ -8,8 +8,8 @@ import com.example.financeapp.modules.depot.Depot;
 import com.example.financeapp.modules.depot.DepotRepository;
 import com.example.financeapp.modules.share.Share;
 import com.example.financeapp.modules.share.ShareRepository;
-import com.example.financeapp.modules.depot.DepoShareAmount;
-import com.example.financeapp.modules.depot.DepoShareAmountRepository;
+import com.example.financeapp.modules.depot.DepotShareAmount;
+import com.example.financeapp.modules.depot.DepotShareAmountRepository;
 import com.example.financeapp.modules.user.User;
 import com.example.financeapp.modules.user.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -27,7 +27,7 @@ public class FinanceAppApplication {
 
     @Bean
     CommandLineRunner init(ShareRepository shareRepository, UserRepository userRepository,
-                           DepotRepository depotRepository, DepoShareAmountRepository depoShareAmountRepository) {
+                           DepotRepository depotRepository, DepotShareAmountRepository depoShareAmountRepository) {
         return args -> {
             Share s1 = new Share(424252L,"SAP",  "1", 133.46, "tech");
             shareRepository.save(s1);
@@ -38,7 +38,7 @@ public class FinanceAppApplication {
                     "1", "2", "1995" );
             Depot dp = new Depot();
             u.setMyDepot(dp);
-            DepoShareAmount dsa = new DepoShareAmount();
+            DepotShareAmount dsa = new DepotShareAmount();
             dsa.setDepot(dp);
             dsa.setShare(s1);
             dsa.setAmount(15);

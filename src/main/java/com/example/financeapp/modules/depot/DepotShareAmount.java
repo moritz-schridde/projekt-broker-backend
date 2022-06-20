@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-public class DepoShareAmount {
+public class DepotShareAmount {
     @Id
     @GeneratedValue
     @NotNull

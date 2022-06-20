@@ -23,7 +23,7 @@ public class Depot {
 
     @Setter
     @OneToMany(mappedBy = "share")
-    private List<DepoShareAmount> mySharesAmount;
+    private List<DepotShareAmount> mySharesAmount;
 
     @Setter
     @NotNull
