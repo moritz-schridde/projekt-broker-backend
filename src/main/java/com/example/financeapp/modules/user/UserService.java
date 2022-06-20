@@ -4,11 +4,11 @@ import java.util.UUID;
 
 public interface UserService {
 
-    User getUser(UUID id);
+    User getUserByEmail(String email);
 
-    UUID createUser(User user);
+    UUID createUser(UserCreateRequest userCreateRequest);
 
-    boolean updateUser(UUID id, User user);
+    boolean updateUser(User user, UserUpdateRequest userUpdateRequest);
 
-    boolean deleteUser(UUID userId);
+    boolean deleteUser(User user);
 }

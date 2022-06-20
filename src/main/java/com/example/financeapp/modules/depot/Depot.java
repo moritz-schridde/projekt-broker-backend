@@ -4,26 +4,39 @@ import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.List;
-import java.util.UUID;
 
+@Entity
+@Getter
 public class Depot {
 
-    @Getter
+    @Id
+    @GeneratedValue
+    @NotNull
+    //@Column(name = "depot_id")
+    private Long id;
+
     @Setter
     @NotNull
-    private int totalShares;
+    private int totalNumberShares;
 
-    @Getter
     @Setter
-    private List<UUID> listOfShares;
+    @OneToMany(mappedBy = "share")
+    private List<DepotShareAmount> mySharesAmount;
 
-    @Getter
     @Setter
     @NotNull
-    private double totalValue;
+    private int totalValue; // in € Cent
 
-    public String getShareInformation() {
+    @Setter
+    private int totalCash; // in € Cent
+
+    public Depot() {
+
+    }
+
+    /*public String getShareInformation() {
         return "";
     }
     public String buy() {
@@ -34,6 +47,6 @@ public class Depot {
     }
     public String getPerformance() {
         return "";
-    }
+    }*/
 }
 

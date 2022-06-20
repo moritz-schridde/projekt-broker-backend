@@ -4,6 +4,7 @@ import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -15,48 +16,57 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
+
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("/me")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<User> getUser() {
-        return ResponseEntity.ok(new User());
+        String email = getCurrentUsersEmail();
+        return ResponseEntity.ok(userService.getUserByEmail(email));
     }
 
-    @PostMapping
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Object> createUser(@RequestBody String name, @RequestBody String surname, @RequestBody String email, @RequestBody String phoneNumber, @RequestBody String street, @RequestBody String houseNumber, @RequestBody String postalCode, @RequestBody String city, @RequestBody String country, @RequestBody String taxNumber, @RequestBody String birhtDay, @RequestBody String birhtMonth, @RequestBody String birthYear) throws URISyntaxException {
-        Boolean created = true;
+    public ResponseEntity<Object> createUser(@RequestBody UserCreateRequest userCreateRequest) throws URISyntaxException {
+        UUID created = userService.createUser(userCreateRequest);
         if (created != null) {
             URI uri = new URIBuilder()
                     .addParameter("scheme", "https")
                     .addParameter("host", "api.trade-empire.karottenkameraden.de")
                     .addParameter("path", "/user/create/" + created)
                     .build();
-            return ResponseEntity.created(uri).body("Success");
+            return ResponseEntity.created(uri).build();
         } else {
-            return ResponseEntity.badRequest().body("Failed");
+            return ResponseEntity.badRequest().body("User already exists or the input is invalid");
         }
     }
 
-    @PutMapping
+    @PutMapping("/me")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> updateUser(@RequestBody String name, @RequestBody String surname, @RequestBody String email, @RequestBody String phoneNumber, @RequestBody String street, @RequestBody String houseNumber, @RequestBody String postalCode, @RequestBody String city, @RequestBody String country, @RequestBody String taxNumber, @RequestBody String birhtDay, @RequestBody String birhtMonth, @RequestBody String birthYear) {
-        boolean updated = true;
+    public ResponseEntity<Object> updateUser(@RequestBody UserUpdateRequest userUpdateRequest) {
+        User user = userService.getUserByEmail(getCurrentUsersEmail());
+        boolean updated = userService.updateUser(user, userUpdateRequest);
         if (updated) {
-            return ResponseEntity.ok().body("Success");
+            return ResponseEntity.ok().build();
         } else {
-            return ResponseEntity.status(409).body("Failed");
+            return ResponseEntity.noContent().build();
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping("/me")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> deleteUser(@PathVariable("userId") UUID userId) {
-        boolean deleted = userService.deleteUser(userId);
-        return (deleted) ? ResponseEntity.ok().body("Success") : ResponseEntity.badRequest().body("Failed");
+    public ResponseEntity<Object> deleteUser() {
+        String email = getCurrentUsersEmail();
+        boolean deleted = userService.deleteUser(userService.getUserByEmail(email));
+        return (deleted) ? ResponseEntity.ok().build() : ResponseEntity.noContent().build();
+    }
+
+    private String getCurrentUsersEmail() {
+        return ((com.example.financeapp.auth.models.User) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal()).getEmail();
     }
 }
