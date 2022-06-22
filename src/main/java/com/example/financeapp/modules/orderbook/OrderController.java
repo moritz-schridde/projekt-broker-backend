@@ -1,6 +1,8 @@
 package com.example.financeapp.modules.orderbook;
 
 import com.example.financeapp.modules.orderbook.communication.models.OrderCommunicationModel;
+import com.example.financeapp.modules.orderbook.communication.models.OrderInfoModel;
+import com.example.financeapp.modules.share.Share;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +16,12 @@ public class OrderController {
     @GetMapping
     public ResponseEntity<ArrayList<OrderCommunicationModel>> findAllOrders() {
         ArrayList<OrderCommunicationModel> dummyOrderList = new ArrayList<>();
-        dummyOrderList.add(new OrderCommunicationModel());
+        OrderCommunicationModel response = new OrderCommunicationModel();
+        Share exampleShareObject = new Share();
+        OrderInfoModel exampleInfoModel = new OrderInfoModel();
+        exampleInfoModel.setShare(exampleShareObject);
+        response.setShare(exampleInfoModel);
+        dummyOrderList.add(response);
         return ResponseEntity.ok(dummyOrderList);
     }
 

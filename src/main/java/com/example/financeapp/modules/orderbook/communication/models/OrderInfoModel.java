@@ -6,6 +6,8 @@ import lombok.Setter;
 
 public class OrderInfoModel {
 
+    @Getter
+    @Setter
     private Share share;
 
     @Getter
@@ -17,4 +19,8 @@ public class OrderInfoModel {
     @Setter
     //The amount of how much shares the user wants to buy or sell
     private int count;
+
+    public OrderInfoModel() {
+
+    }
 }

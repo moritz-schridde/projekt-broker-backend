@@ -7,5 +7,7 @@ public class DepotResponse {
     @Setter
     private double totalSpendMoney;
 
-    private DepotShareInfoModel[] depotInfos;
+    @Getter
+    @Setter
+    private DepotShareInfoModel[] shares;
 }

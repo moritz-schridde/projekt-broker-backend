@@ -31,5 +31,11 @@ public class OrderCommunicationModel {
     @Setter
     private double price;
 
-    private OrderInfoModel infoModel;
-}
+    @Getter
+    @Setter
+    private OrderInfoModel share;
+
+    public OrderCommunicationModel() {
+
+    }
+ }

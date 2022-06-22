@@ -13,5 +13,5 @@ public class SharePerformanceResponse {
 
     @Getter
     @Setter
-    private Timestamp timestamp;
+    private String timestamp;
 }

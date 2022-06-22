@@ -19,6 +19,6 @@ public class UserCreateCommunicationModel {
     private String postalCode;
     private String city;
     private String country;
-    private String birthDay;
+    private String birthDate;
     private String taxNumber;
 }

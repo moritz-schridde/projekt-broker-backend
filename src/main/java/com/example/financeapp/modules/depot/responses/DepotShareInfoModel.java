@@ -14,5 +14,7 @@ public class DepotShareInfoModel {
     //Durchschnittspreis
     private double purchasePrice;
 
+    @Getter
+    @Setter
     private Share share;
 }
