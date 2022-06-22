@@ -36,7 +36,7 @@ public class FinanceAppApplication {
             shareRepository.save(s2);
             User u = new User("name", "surname", "email@mail.com", 12345,
                     "street", "12", "12345", "city", "country",
-                    "1", "2", "1995" );
+                    "01.02.1995" );
             Depot dp = new Depot();
             u.setMyDepot(dp);
             DepotShareAmount dsa = new DepotShareAmount();

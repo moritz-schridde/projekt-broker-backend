@@ -1,4 +1,4 @@
-package com.example.financeapp.modules.user;
+package com.example.financeapp.modules.user.requests;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +19,5 @@ public class UserCreateRequest {
     private String postalCode;
     private String city;
     private String country;
-    private int birthDay;
-    private int birthMonth;
-    private int birthYear;
+    private String birthDay;
 }

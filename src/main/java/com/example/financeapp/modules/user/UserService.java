@@ -1,5 +1,7 @@
 package com.example.financeapp.modules.user;
 
+import com.example.financeapp.modules.user.requests.UserCreateRequest;
+
 import java.util.UUID;
 
 public interface UserService {

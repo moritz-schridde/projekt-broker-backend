@@ -1,5 +1,6 @@
 package com.example.financeapp.modules.user;
 
+import com.example.financeapp.modules.user.requests.UserCreateRequest;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

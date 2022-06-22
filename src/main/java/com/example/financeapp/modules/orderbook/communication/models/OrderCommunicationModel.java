@@ -1,10 +1,11 @@
-package com.example.financeapp.modules.orderbook.requests;
+package com.example.financeapp.modules.orderbook.communication.models;
 
 import com.example.financeapp.modules.orderbook.OrderEnums;
 import lombok.Getter;
 import lombok.Setter;
 
-public class OrderUpdateRequest {
+public class OrderCommunicationModel {
+
     @Getter
     @Setter
     private long orderId;
@@ -23,5 +24,12 @@ public class OrderUpdateRequest {
 
     @Getter
     @Setter
-    double price;
+    // Iso normed date string
+    private String timestamp;
+
+    @Getter
+    @Setter
+    private double price;
+
+    private OrderInfoModel infoModel;
 }

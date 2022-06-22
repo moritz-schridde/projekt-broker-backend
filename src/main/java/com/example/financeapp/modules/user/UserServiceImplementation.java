@@ -1,6 +1,7 @@
 package com.example.financeapp.modules.user;
 
 import com.example.financeapp.modules.depot.Depot;
+import com.example.financeapp.modules.user.requests.UserCreateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
