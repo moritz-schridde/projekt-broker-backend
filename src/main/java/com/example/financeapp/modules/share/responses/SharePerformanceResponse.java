@@ -9,7 +9,7 @@ public class SharePerformanceResponse {
 
     @Getter
     @Setter
-    private double currentValue;
+    private double value;
 
     @Getter
     @Setter
