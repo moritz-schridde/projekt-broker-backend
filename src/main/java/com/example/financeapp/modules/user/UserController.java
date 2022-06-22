@@ -1,6 +1,7 @@
 package com.example.financeapp.modules.user;
 
 import com.example.financeapp.modules.user.communication.models.UserCreateCommunicationModel;
+import com.example.financeapp.modules.user.communication.models.UserRequestCommunicationModel;
 import com.example.financeapp.modules.user.communication.models.UserUpdateCommunicationModel;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,10 @@ public class UserController {
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<User> getUser() {
+    public ResponseEntity<UserRequestCommunicationModel> getUser() {
         String email = getCurrentUsersEmail();
-        return ResponseEntity.ok(userService.getUserByEmail(email));
+        User users = userService.getUserByEmail(email);
+        return ResponseEntity.ok(new UserRequestCommunicationModel());
     }
 
     @PostMapping()

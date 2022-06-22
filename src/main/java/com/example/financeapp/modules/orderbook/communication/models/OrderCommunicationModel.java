@@ -24,6 +24,10 @@ public class OrderCommunicationModel {
 
     @Getter
     @Setter
+    private OrderEnums.State state;
+
+    @Getter
+    @Setter
     // Iso normed date string
     private String timestamp;
 

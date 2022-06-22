@@ -28,7 +28,7 @@ public class UserServiceImplementation implements UserService {
         User user = new User();
         userMapping(user, userCreateCommunicationModel.getName(), userCreateCommunicationModel.getSurname(), userCreateCommunicationModel.getPhoneNumber(),
                 userCreateCommunicationModel.getStreet(), userCreateCommunicationModel.getHouseNumber(), userCreateCommunicationModel.getPostalCode(),
-                userCreateCommunicationModel.getCity(), userCreateCommunicationModel.getCountry(), userCreateCommunicationModel.getTaxNumber(),userCreateCommunicationModel.getBirthDay());
+                userCreateCommunicationModel.getCity(), userCreateCommunicationModel.getCountry(), userCreateCommunicationModel.getTaxNumber(),userCreateCommunicationModel.getBirthDate());
         user.setEmail(userCreateCommunicationModel.getEmail());
         user.setMyDepot(new Depot());
         if (!userRepository.existsById(user.getId())) {
@@ -51,7 +51,7 @@ public class UserServiceImplementation implements UserService {
         if (city != null) user.setCity(city);
         if (country != null) user.setCountry(country);
         if (country != null) user.setTaxNumber(taxNumber);
-        if (birthDay != null) user.setBirthDay(birthDay);
+        if (birthDay != null) user.setBirthDate(birthDay);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class UserServiceImplementation implements UserService {
             userMapping(user, userUpdateRequest.getName(), userUpdateRequest.getSurname(),
                     userUpdateRequest.getPhoneNumber(), userUpdateRequest.getStreet(),
                     userUpdateRequest.getHouseNumber(), userUpdateRequest.getPostalCode(), userUpdateRequest.getCity(),
-                    userUpdateRequest.getCountry(), userUpdateRequest.getTaxNumber(), userUpdateRequest.getBirthDay());
+                    userUpdateRequest.getCountry(), userUpdateRequest.getTaxNumber(), userUpdateRequest.getBirthDate());
             userRepository.save(user);
             return true;
         } else {

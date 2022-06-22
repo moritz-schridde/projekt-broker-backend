@@ -86,7 +86,7 @@ public class User {
     @Getter
     @Setter
     @NotNull
-    private String birthDay;
+    private String birthDate;
 
     @Getter
     @Setter
@@ -105,7 +105,7 @@ public class User {
                 @JsonProperty("houseNumber") @NotNull String houseNumber,
                 @JsonProperty("postalCode") @NotNull String postalCode, @JsonProperty("city") @NotNull String city,
                 @JsonProperty("country") @NotNull String country, @JsonProperty("taxNumber") @NotNull String taxNumber,
-                @JsonProperty("birthDay") @NotNull String birthDay) {
+                @JsonProperty("birthDay") @NotNull String birthDate) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -116,7 +116,7 @@ public class User {
         this.city = city;
         this.country = country;
         this.taxNumber = taxNumber;
-        this.birthDay = birthDay;
+        this.birthDate = birthDate;
     }
 
     @Override
