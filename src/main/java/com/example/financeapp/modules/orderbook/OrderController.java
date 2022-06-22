@@ -1,6 +1,5 @@
 package com.example.financeapp.modules.orderbook;
 
-import com.example.financeapp.modules.account.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,7 @@ public class OrderController {
 
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody @Valid Order request){
+    public ResponseEntity<Order> createOrder(@RequestBody @Valid Order request)throws Exception{
         Order order = orderService.createOrder(request);
         return ResponseEntity.ok(order);
     }

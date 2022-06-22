@@ -27,10 +27,10 @@ public class Depot {
 
     @Setter
     @NotNull
-    private int totalValue; // in € Cent
+    private double totalValue; // in € Euro
 
     @Setter
-    private int totalCash; // in € Cent
+    private double totalCash; // in € Euro
 
     public Depot() {
 

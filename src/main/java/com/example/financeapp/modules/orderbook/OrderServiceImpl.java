@@ -1,5 +1,9 @@
 package com.example.financeapp.modules.orderbook;
 
+import com.example.financeapp.modules.depot.Depot;
+import com.example.financeapp.modules.depot.DepotRepository;
+import com.example.financeapp.modules.depot.DepotShareAmount;
+import com.example.financeapp.modules.depot.DepotShareAmountRepository;
 import com.example.financeapp.modules.share.Share;
 import com.example.financeapp.modules.share.ShareRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class OrderServiceImpl implements OrderService{
@@ -16,6 +19,10 @@ public class OrderServiceImpl implements OrderService{
     OrderRepository orderRepository;
     @Autowired
     ShareRepository shareRepository;
+    @Autowired
+    DepotRepository depotRepository;
+    @Autowired
+    DepotShareAmountRepository depotShareAmountRepository;
 
 
     @Override
@@ -44,18 +51,25 @@ public class OrderServiceImpl implements OrderService{
     ArrayList<Order> sellMarket = new ArrayList<>();
 
     @Override
-    public Order createOrder(Order request) {
+    public Order createOrder(Order request) throws Exception {
         long shareId = request.getShareId();
         double referenzpreis = shareRepository.getShareById(shareId).getPrice();
+        orderRepository.save(request);
 
 
         //Check if Orderbook is already loaded
         //if not then load and sort into lists accordingly
-        if(Order.reloadOrderbook){
+        //if(Order.reloadOrderbook){
 
             buyMarket = orderRepository.findAllByStateAndOfferTypeAndOrderTypeAndShareIdOrderByTimestamp(Order.State.OPEN, Order.OrderType.MARKETORDER, Order.OfferType.BUY, shareId);
 
             sellMarket= orderRepository.findAllByStateAndOfferTypeAndOrderTypeAndShareIdOrderByTimestamp(Order.State.OPEN, Order.OrderType.MARKETORDER, Order.OfferType.SELL, shareId);
+
+            buyMaxPrice = orderRepository.findAllByStateAndOfferTypeAndOrderTypeAndShareIdOrderByTimestamp(Order.State.OPEN, Order.OrderType.LIMITORDER, Order.OfferType.BUY, shareId);
+
+            sellMinPrice =orderRepository.findAllByStateAndOfferTypeAndOrderTypeAndShareIdOrderByTimestamp(Order.State.OPEN, Order.OrderType.STOPORDER, Order.OfferType.SELL, shareId);
+
+
 
             //TODO die anderen Listen vervollständigen 
 
@@ -83,20 +97,22 @@ public class OrderServiceImpl implements OrderService{
             });*/
 
             Order.setReloadOrderbook(false);
-        }
+        //}
 
-        orderRepository.save(request);
+
 
 
 
         //TODO den einkommenden request richtig einordnen
 
-        if (request.getOfferType() == Order.OfferType.BUY) {
+        /*if (request.getOfferType() == Order.OfferType.BUY) {
             buyOrders.add(request);
         }
         if (request.getOfferType()== Order.OfferType.SELL){
             sellOrders.add(request);
         }
+
+         */
 
 
 
@@ -107,54 +123,54 @@ public class OrderServiceImpl implements OrderService{
     }
 
 
-    public void matchinAlgo(long shareId, ArrayList<Order> buyMarketList, ArrayList<Order> sellMarketList, ArrayList<Order> buyMaxPriceList, ArrayList<Order> sellMinPriceList){
+    public void matchinAlgo(long shareId, ArrayList<Order> buyMarketList, ArrayList<Order> sellMarketList, ArrayList<Order> buyMaxPriceList, ArrayList<Order> sellMinPriceList) throws Exception{
         double referenzpreis = shareRepository.getShareById(shareId).getPrice();
 
         if(sellMarketList!=null){
-            long firstOrderId = sellMarketList.get(0).getId();
+            long sellOrderId = sellMarketList.get(0).getId();
             if (buyMarketList!=null){
-                long secondOrderId = buyMarketList.get(0).getId();
+                long buyOrderId = buyMarketList.get(0).getId();
                 buyMarketList.remove(0);
                 sellMarketList.remove(0);
-                executeOrder(shareId, firstOrderId,secondOrderId);
+                executeOrder(shareId, sellOrderId,buyOrderId);
 
                 //ruft sich selber wieder auf um zu prüfen ob weitere Matches möglich sind
                 matchinAlgo(shareId, buyMarketList, sellMarketList, buyMaxPriceList, sellMinPriceList);
             }
             else if(buyMaxPriceList!=null){
                 double highestbid=0.0;
-                Order bestOrder=null;
+                Order bestBuyOrder=null;
                 for (Order order : buyMaxPriceList) {
                     if (order.getMaxMinPreis() > highestbid) {
                         highestbid = order.getMaxMinPreis();
-                        bestOrder= order;
+                        bestBuyOrder= order;
                     }
                 }
                 sellMarketList.remove(0); //Orders aus buch löschen
-                buyMaxPriceList.remove(bestOrder);
+                buyMaxPriceList.remove(bestBuyOrder);
 
                 //Verkäufer verkauft zu jedem Preis und daher wird er mit dem Käufer gematcht der das meiste bietet.
-                executeOrder(highestbid, bestOrder.getId(), firstOrderId);
+                executeOrder(highestbid, sellOrderId,bestBuyOrder.getId());
                 matchinAlgo(shareId, buyMarketList, sellMarketList, buyMaxPriceList, sellMinPriceList); //matching Algo erneut anstoßen falls durch neuen refP neue Matches möglich sind
 
             } //elseif
         }//if
 
         else if(!buyMarketList.isEmpty()){
-            long firstOrderId = buyMarketList.get(0).getId();
+            long buyOrderId = buyMarketList.get(0).getId();
             if(sellMinPriceList!=null){
                 double lowestAcceptablePrice =sellMinPriceList.get(0).getMaxMinPreis();
-                Order bestOrder =sellMinPriceList.get(0);
+                Order sellOrder =sellMinPriceList.get(0);
                 for (Order order: sellMinPriceList){
                     if(order.getMaxMinPreis()<lowestAcceptablePrice){
                         lowestAcceptablePrice=order.getMaxMinPreis();
-                        bestOrder=order;
+                        sellOrder=order;
                     }
                 }
                 buyMarketList.remove(0);
-                sellMinPriceList.remove(bestOrder);
+                sellMinPriceList.remove(sellOrder);
 
-                executeOrder(lowestAcceptablePrice, firstOrderId, bestOrder.getId());
+                executeOrder(lowestAcceptablePrice,  sellOrder.getId(),buyOrderId);
 
                 //matching Algo erneut anstoßen falls durch neuen refP neue Matches möglich sind
                 matchinAlgo(shareId, buyMarketList, sellMarketList, buyMaxPriceList, sellMinPriceList);
@@ -178,16 +194,15 @@ public class OrderServiceImpl implements OrderService{
                 if(order.getMaxMinPreis()> highestBid){
                     highestBid = order.getMaxMinPreis();
                     bestBuyOrder= order;
-
                 }
             }
 
             if(highestBid> lowestAcceptablePrice){
                 if( referenzpreis> highestBid){
-                    executeOrder(highestBid, bestBuyOrder.getId(), bestSellOrder.getId());
+                    executeOrder(highestBid,  bestSellOrder.getId(),bestBuyOrder.getId());
 
                 }else{
-                    executeOrder(referenzpreis, bestBuyOrder.getId(), bestSellOrder.getId());
+                    executeOrder(referenzpreis,  bestSellOrder.getId(),bestBuyOrder.getId());
                 }
                 matchinAlgo(shareId, buyMarketList, sellMarketList, buyMaxPriceList, sellMinPriceList);
             }
@@ -199,14 +214,55 @@ public class OrderServiceImpl implements OrderService{
 
 
 
-    public void executeOrder(double refP, long firstOrderId, long secondOrderId){
+    public void executeOrder(double refP, long sellOrderId, long buyOrderId) throws Exception{
         //TODO geld abbuchen Aktein transferieren
         //geld vom depot abbuchen
         //aktien vom Verkäufer abziehen und dem Käufer gutschreiben
+        //Orders auf closed setzten
 
+        Order sellOrder = orderRepository.getOrderById(sellOrderId);
+        sellOrder.setState(Order.State.CLOSED);
+
+        Depot sellDepot = depotRepository.getById(sellOrder.getDepotId());
+        sellDepot.setTotalCash(sellDepot.getTotalCash()+(sellOrder.getCount()*refP));
+
+        Share shareToSell = shareRepository.getShareById(sellOrder.getShareId());
+        DepotShareAmount sellDepotShareAmount = depotShareAmountRepository.findDepotShareAmountByDepotAndShare(sellDepot, shareToSell);
+        sellDepotShareAmount.setAmount(sellDepotShareAmount.getAmount()-sellOrder.getCount());
+        if (sellDepotShareAmount.getAmount()<0){
+            throw new Exception("negative Share amount");
+        }
+
+
+
+
+        Order buyOrder= orderRepository.getOrderById(buyOrderId);
+        buyOrder.setState(Order.State.CLOSED);
+
+        Depot buyDepot = depotRepository.getById(buyOrder.getDepotId());
+        buyDepot.setTotalCash(buyDepot.getTotalCash()-(buyOrder.getCount()*refP));
+        if(buyDepot.getTotalCash()<0){
+            throw  new Exception("nicht genug geld um die Aktien zu kaufen");
+        }
+
+        // depot share amout suchen und hochzählen wenn nciht vorhanden neu anlegen
+        DepotShareAmount buyDepotShareAmount = depotShareAmountRepository.findDepotShareAmountByDepotAndShare(buyDepot, shareToSell);
+        if(buyDepotShareAmount==null){
+            buyDepotShareAmount = new DepotShareAmount(shareToSell, buyDepot, 0);
+        }
+        buyDepotShareAmount.setAmount(buyOrder.getCount());
+
+
+        sellOrder =orderRepository.save(sellOrder);
+        buyOrder = orderRepository.save(buyOrder);
+        sellDepot = depotRepository.save(sellDepot);
+        buyDepot = depotRepository.save(buyDepot);
+        sellDepotShareAmount = depotShareAmountRepository.save(sellDepotShareAmount);
+        buyDepotShareAmount = depotShareAmountRepository.save(buyDepotShareAmount);
 
         //neuen ref preis setzen
-        setNewSharePrice(firstOrderId, refP);
+        long shareId = sellOrder.getShareId();
+        setNewSharePrice(shareId, refP);
 
     }
 

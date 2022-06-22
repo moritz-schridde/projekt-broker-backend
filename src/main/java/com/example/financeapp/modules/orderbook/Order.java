@@ -49,13 +49,13 @@ public class Order {
     private OfferType offerType;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "enum('MARKETORDER', 'LIMITORDER','STOPORDER')")
+    @Column(columnDefinition = "enum('MARKETORDER', 'LIMITORDER','STOPORDER')")  //Limit für buy stop für sell
     @NotNull
     private  OrderType orderType;
 
     @Getter
     @Setter
-    double MaxMinPreis; //nur wenn keine Marketorder
+    double maxMinPreis; //nur wenn keine Marketorder
 
     @Getter
     @Setter
@@ -76,7 +76,7 @@ public class Order {
         this.state = state;
         this.offerType = offerType;
         this.orderType = orderType;
-        MaxMinPreis = maxMinPreis;
+        this.maxMinPreis = maxMinPreis;
     }
 
     public Order(long id, long shareId, long depotId, int count, Timestamp timestamp, double maxMinPreis) {
@@ -85,7 +85,30 @@ public class Order {
         this.depotId = depotId;
         this.count = count;
         this.timestamp = timestamp;
-        MaxMinPreis = maxMinPreis;
+        this.maxMinPreis = maxMinPreis;
+    }
+
+    public Order(long shareId, long depotId, int count, Timestamp timestamp, State state, OfferType offerType,
+                 OrderType orderType, double maxMinPreis) {
+        this.shareId = shareId;
+        this.depotId = depotId;
+        this.count = count;
+        this.timestamp = timestamp;
+        this.state = state;
+        this.offerType = offerType;
+        this.orderType = orderType;
+        this.maxMinPreis = maxMinPreis;
+    }
+
+    public Order(long shareId, long depotId, int count, State state, OfferType offerType, OrderType orderType,
+                 double maxMinPreis) {
+        this.shareId = shareId;
+        this.depotId = depotId;
+        this.count = count;
+        this.state = state;
+        this.offerType = offerType;
+        this.orderType = orderType;
+        this.maxMinPreis = maxMinPreis;
     }
 
     public Order (){};
@@ -129,8 +152,4 @@ public class Order {
     public void setOfferType(OfferType offerType){
         this.offerType = offerType;
     }
-
-
-
-
 }

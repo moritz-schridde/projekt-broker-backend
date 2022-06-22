@@ -6,6 +6,7 @@ import com.example.financeapp.modules.bank.BankRepository;
 
 import com.example.financeapp.modules.depot.Depot;
 import com.example.financeapp.modules.depot.DepotRepository;
+import com.example.financeapp.modules.orderbook.Order;
 import com.example.financeapp.modules.share.Share;
 import com.example.financeapp.modules.share.ShareRepository;
 import com.example.financeapp.modules.depot.DepotShareAmount;
@@ -17,6 +18,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import java.sql.Timestamp;
 
 @SpringBootApplication
 public class FinanceAppApplication {
@@ -45,7 +48,16 @@ public class FinanceAppApplication {
             dsa.setAmount(15);
             depotRepository.save(dp);
             userRepository.save(u);
-            depoShareAmountRepository.save(dsa);
+           // depoShareAmountRepository.save(dsa);
+
+
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+            Order order = new Order(1,3,5, timestamp, Order.State.OPEN,  Order.OfferType.BUY, Order.OrderType.MARKETORDER, 0);
+            Order order2 = new Order(1,3,5, timestamp, Order.State.OPEN,  Order.OfferType.BUY, Order.OrderType.MARKETORDER, 0);
+            Order order3 = new Order(1,3,10, timestamp, Order.State.OPEN,  Order.OfferType.SELL, Order.OrderType.MARKETORDER, 0);
+
+
 
         };
     }

@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface OrderService {
     public List<Order> findAllOrders();
-    public Order createOrder(Order request);
+    public Order createOrder(Order request) throws Exception;
     public void deleteOrder(long id);
 }

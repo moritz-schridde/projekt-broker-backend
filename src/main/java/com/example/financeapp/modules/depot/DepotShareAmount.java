@@ -28,4 +28,14 @@ public class DepotShareAmount {
 
     @Setter
     private int amount;
+
+    public DepotShareAmount(Share share, Depot depot, int amount) {
+        this.share = share;
+        this.depot = depot;
+        this.amount = amount;
+    }
+
+    public DepotShareAmount() {
+
+    }
 }
