@@ -5,7 +5,8 @@ import lombok.Setter;
 public class DepotResponse {
     @Getter
     @Setter
-    private double totalSpendMoney;
+    //Restliche freies Geld auf dem Konto
+    private double availableMoney;
 
     @Getter
     @Setter

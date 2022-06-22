@@ -20,7 +20,7 @@ public class OrderController {
         Share exampleShareObject = new Share();
         OrderInfoModel exampleInfoModel = new OrderInfoModel();
         exampleInfoModel.setShare(exampleShareObject);
-        response.setShare(exampleInfoModel);
+        response.setInfo(exampleInfoModel);
         dummyOrderList.add(response);
         return ResponseEntity.ok(dummyOrderList);
     }

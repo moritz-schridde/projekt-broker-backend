@@ -12,10 +12,6 @@ public class OrderCommunicationModel {
 
     @Getter
     @Setter
-    private int count;
-
-    @Getter
-    @Setter
     private OrderEnums.OfferType offerType;
 
     @Getter
@@ -33,11 +29,7 @@ public class OrderCommunicationModel {
 
     @Getter
     @Setter
-    private double price;
-
-    @Getter
-    @Setter
-    private OrderInfoModel share;
+    private OrderInfoModel info;
 
     public OrderCommunicationModel() {
 
