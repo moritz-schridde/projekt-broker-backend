@@ -43,8 +43,6 @@ public class OrderServiceImpl implements OrderService{
     }
 
     //declare and initialize needed Lists
-    ArrayList<Order> sellOrders= new ArrayList<>();
-    ArrayList<Order> buyOrders=new ArrayList<>();
     ArrayList<Order> buyMaxPrice = new ArrayList<>();
     ArrayList<Order> buyMarket = new ArrayList<>();
     ArrayList<Order> sellMinPrice = new ArrayList<>();
@@ -55,19 +53,6 @@ public class OrderServiceImpl implements OrderService{
         long shareId = request.getShareId();
         double referenzpreis = shareRepository.getShareById(shareId).getPrice();
         orderRepository.save(request);
-
-
-        //Check if Orderbook is already loaded
-        //if not then load and sort into lists accordingly
-        //if(Order.reloadOrderbook){
-
-        ArrayList<Order> test = orderRepository.findAllByState(Order.State.OPEN);
-        ArrayList<Order> test2 = orderRepository.findAllByOrderType(Order.OrderType.MARKETORDER);
-        ArrayList<Order> test3 = orderRepository.findAllByStateAndOrderType(Order.State.OPEN ,Order.OrderType.MARKETORDER);
-
-
-
-
 
         matchinAlgo(shareId);
 
@@ -100,17 +85,17 @@ public class OrderServiceImpl implements OrderService{
                 //ruft sich selber wieder auf um zu prüfen ob weitere Matches möglich sind
                 matchinAlgo(shareId);
             }
-            else if(buyMaxPrice!=null){
-                double highestbid=0.0;
-                Order bestBuyOrder=null;
+            else if(!buyMaxPrice.isEmpty()){
+                double highestbid=buyMaxPrice.get(0).getMaxMinPreis();
+                Order bestBuyOrder=buyMaxPrice.get(0);
                 for (Order order : buyMaxPrice) {
                     if (order.getMaxMinPreis() > highestbid) {
                         highestbid = order.getMaxMinPreis();
                         bestBuyOrder= order;
                     }
                 }
-                sellMarket.remove(0); //Orders aus buch löschen
-                buyMaxPrice.remove(bestBuyOrder);
+                //sellMarket.remove(0); //Orders aus buch löschen
+                //buyMaxPrice.remove(bestBuyOrder);
 
                 //Verkäufer verkauft zu jedem Preis und daher wird er mit dem Käufer gematcht der das meiste bietet.
                 executeOrder(highestbid, sellOrderId,bestBuyOrder.getId());
@@ -121,7 +106,7 @@ public class OrderServiceImpl implements OrderService{
 
         else if(!buyMarket.isEmpty()){
             long buyOrderId = buyMarket.get(0).getId();
-            if(sellMinPrice!=null){
+            if(!sellMinPrice.isEmpty()){
                 double lowestAcceptablePrice =sellMinPrice.get(0).getMaxMinPreis();
                 Order sellOrder =sellMinPrice.get(0);
                 for (Order order: sellMinPrice){
@@ -178,7 +163,7 @@ public class OrderServiceImpl implements OrderService{
 
 
     public void executeOrder(double refP, long sellOrderId, long buyOrderId) throws Exception{
-        //TODO total numbers of shares anpassen und was ist mit total value
+        // TODO was ist mit total value
 
 
         Order sellOrder = orderRepository.getOrderById(sellOrderId);
@@ -210,7 +195,9 @@ public class OrderServiceImpl implements OrderService{
 
         Share shareToSell = shareRepository.getShareById(sellOrder.getShareId());
         DepotShareAmount sellDepotShareAmount = depotShareAmountRepository.findDepotShareAmountByDepotAndShare(sellDepot, shareToSell);
+
         sellDepotShareAmount.setAmount(sellDepotShareAmount.getAmount()-orderVolume);
+        sellDepot.setTotalNumberShares(sellDepot.getTotalNumberShares()-orderVolume);
         if (sellDepotShareAmount.getAmount()<0){
             throw new Exception("negative Share amount");
         }
@@ -232,6 +219,7 @@ public class OrderServiceImpl implements OrderService{
             buyDepotShareAmount = new DepotShareAmount(shareToSell, buyDepot, 0);
         }
         buyDepotShareAmount.setAmount(buyDepotShareAmount.getAmount()+orderVolume);
+        buyDepot.setTotalNumberShares(buyDepot.getTotalNumberShares()+orderVolume);
 
 
 

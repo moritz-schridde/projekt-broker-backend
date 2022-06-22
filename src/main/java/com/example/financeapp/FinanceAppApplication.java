@@ -42,15 +42,16 @@ public class FinanceAppApplication {
                     "street", "12", "12345", "city", "country",
                     "1", "2", "1995" );
             Depot buyerDepot = new Depot();
-            buyerDepot.setTotalCash(1000);
+            buyerDepot.setTotalCash(1450);
+            buyerDepot.setTotalNumberShares(10);
             buyer.setMyDepot(buyerDepot);
-            DepotShareAmount dsa = new DepotShareAmount();
-            dsa.setDepot(buyerDepot);
-            dsa.setShare(s1);
-            dsa.setAmount(15);
+            DepotShareAmount buyerdsa = new DepotShareAmount();
+            buyerdsa.setDepot(buyerDepot);
+            buyerdsa.setShare(s1);
+            buyerdsa.setAmount(10);
             depotRepository.save(buyerDepot);
             userRepository.save(buyer);
-            depoShareAmountRepository.save(dsa);
+            depoShareAmountRepository.save(buyerdsa);
 
 
             User seller = new User("seller", "melk", "email2@mail.com", 12345,
@@ -58,25 +59,28 @@ public class FinanceAppApplication {
                     "1", "2", "1995" );
             Depot sellerDepot = new Depot();
             sellerDepot.setTotalCash(1000);
+            sellerDepot.setTotalNumberShares(15);
             seller.setMyDepot(sellerDepot);
-            DepotShareAmount bdsa = new DepotShareAmount();
-            bdsa.setDepot(sellerDepot);
-            bdsa.setShare(s1);
-            bdsa.setAmount(10);
+            DepotShareAmount sdsa = new DepotShareAmount();
+            sdsa.setDepot(sellerDepot);
+            sdsa.setShare(s1);
+            sdsa.setAmount(15);
             depotRepository.save(sellerDepot);
             userRepository.save(seller);
-            depoShareAmountRepository.save(bdsa);
+            depoShareAmountRepository.save(sdsa);
 
 
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
             Order buyOrder = new Order(1,3,5,  Order.State.OPEN,  Order.OfferType.BUY, Order.OrderType.MARKETORDER, 0);
             Order buyOrder2 = new Order(1,3,5,  Order.State.OPEN,  Order.OfferType.BUY, Order.OrderType.MARKETORDER, 0);
-            Order sellOrder  = new Order(1,5,10,  Order.State.OPEN,  Order.OfferType.SELL, Order.OrderType.MARKETORDER, 0);
+            Order sellOrder  = new Order(1,5,15,  Order.State.OPEN,  Order.OfferType.SELL, Order.OrderType.MARKETORDER, 0);
+            Order buyOrder3 = new Order(1,3,5,  Order.State.OPEN,  Order.OfferType.BUY, Order.OrderType.LIMITORDER, 90);
 
             orderRepository.save(buyOrder);
             orderRepository.save(buyOrder2);
             orderRepository.save(sellOrder);
+            orderRepository.save(buyOrder3);
 
 
 
