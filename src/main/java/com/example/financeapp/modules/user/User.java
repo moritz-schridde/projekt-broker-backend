@@ -88,6 +88,10 @@ public class User {
     @NotNull
     private String birthDay;
 
+    @Getter
+    @Setter
+    private String taxNumber;
+
     @Setter
     @OneToOne
     private Depot myDepot;
@@ -100,7 +104,8 @@ public class User {
                 @JsonProperty("phoneNumber") @NotNull int phoneNumber, @JsonProperty("street") @NotNull String street,
                 @JsonProperty("houseNumber") @NotNull String houseNumber,
                 @JsonProperty("postalCode") @NotNull String postalCode, @JsonProperty("city") @NotNull String city,
-                @JsonProperty("country") @NotNull String country, @JsonProperty("birthDay") @NotNull String birthDay) {
+                @JsonProperty("country") @NotNull String country, @JsonProperty("taxNumber") @NotNull String taxNumber,
+                @JsonProperty("birthDay") @NotNull String birthDay) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -110,6 +115,7 @@ public class User {
         this.postalCode = postalCode;
         this.city = city;
         this.country = country;
+        this.taxNumber = taxNumber;
         this.birthDay = birthDay;
     }
 

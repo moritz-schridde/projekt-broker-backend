@@ -35,7 +35,7 @@ public class FinanceAppApplication {
             Share s2 = new Share(1213141L, "BASF", (byte) 2, 55.32, "chemie");
             shareRepository.save(s2);
             User u = new User("name", "surname", "email@mail.com", 12345,
-                    "street", "12", "12345", "city", "country",
+                    "street", "12", "12345", "city", "country", "TAX123TestWerzahlrschonSteuern",
                     "01.02.1995" );
             Depot dp = new Depot();
             u.setMyDepot(dp);

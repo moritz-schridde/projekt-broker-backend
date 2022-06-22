@@ -1,6 +1,7 @@
 package com.example.financeapp.modules.user;
 
-import com.example.financeapp.modules.user.requests.UserCreateRequest;
+import com.example.financeapp.modules.user.communication.models.UserCreateCommunicationModel;
+import com.example.financeapp.modules.user.communication.models.UserUpdateCommunicationModel;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,17 +24,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/me")
+    @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<User> getUser() {
         String email = getCurrentUsersEmail();
         return ResponseEntity.ok(userService.getUserByEmail(email));
     }
 
-    @PostMapping("/create")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Object> createUser(@RequestBody UserCreateRequest userCreateRequest) throws URISyntaxException {
-        UUID created = userService.createUser(userCreateRequest);
+    public ResponseEntity<Object> createUser(@RequestBody UserCreateCommunicationModel userCreateCommunicationModel) throws URISyntaxException {
+        UUID created = userService.createUser(userCreateCommunicationModel);
         if (created != null) {
             URI uri = new URIBuilder()
                     .addParameter("scheme", "https")
@@ -46,9 +47,9 @@ public class UserController {
         }
     }
 
-    @PutMapping("/me")
+    @PutMapping()
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> updateUser(@RequestBody UserUpdateRequest userUpdateRequest) {
+    public ResponseEntity<Object> updateUser(@RequestBody UserUpdateCommunicationModel userUpdateRequest) {
         User user = userService.getUserByEmail(getCurrentUsersEmail());
         boolean updated = userService.updateUser(user, userUpdateRequest);
         if (updated) {
@@ -58,7 +59,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/me")
+    @DeleteMapping()
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> deleteUser() {
         String email = getCurrentUsersEmail();

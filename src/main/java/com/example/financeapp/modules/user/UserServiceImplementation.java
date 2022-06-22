@@ -1,7 +1,8 @@
 package com.example.financeapp.modules.user;
 
 import com.example.financeapp.modules.depot.Depot;
-import com.example.financeapp.modules.user.requests.UserCreateRequest;
+import com.example.financeapp.modules.user.communication.models.UserCreateCommunicationModel;
+import com.example.financeapp.modules.user.communication.models.UserUpdateCommunicationModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,13 +24,12 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public UUID createUser(UserCreateRequest userCreateRequest) {
+    public UUID createUser(UserCreateCommunicationModel userCreateCommunicationModel) {
         User user = new User();
-        userMapping(user, userCreateRequest.getName(), userCreateRequest.getSurname(), userCreateRequest.getPhoneNumber(),
-                userCreateRequest.getStreet(), userCreateRequest.getHouseNumber(), userCreateRequest.getPostalCode(),
-                userCreateRequest.getCity(), userCreateRequest.getCountry(), userCreateRequest.getBirthDay(),
-                userCreateRequest.getBirthMonth(), userCreateRequest.getBirthYear());
-        user.setEmail(userCreateRequest.getEmail());
+        userMapping(user, userCreateCommunicationModel.getName(), userCreateCommunicationModel.getSurname(), userCreateCommunicationModel.getPhoneNumber(),
+                userCreateCommunicationModel.getStreet(), userCreateCommunicationModel.getHouseNumber(), userCreateCommunicationModel.getPostalCode(),
+                userCreateCommunicationModel.getCity(), userCreateCommunicationModel.getCountry(), userCreateCommunicationModel.getTaxNumber(),userCreateCommunicationModel.getBirthDay());
+        user.setEmail(userCreateCommunicationModel.getEmail());
         user.setMyDepot(new Depot());
         if (!userRepository.existsById(user.getId())) {
             userRepository.save(user);
@@ -41,7 +41,7 @@ public class UserServiceImplementation implements UserService {
     }
 
     private void userMapping(User user, String name, String surname, int phoneNumber, String street, String houseNumber,
-                             String postalCode, String city, String country, int birthDay, int birthMonth, int birthYear) {
+                             String postalCode, String city, String country, String taxNumber, String birthDay) {
         if (name != null) user.setName(name);
         if (surname != null) user.setSurname(surname);
         if (phoneNumber != 0) user.setPhoneNumber(phoneNumber);
@@ -50,19 +50,17 @@ public class UserServiceImplementation implements UserService {
         if (postalCode != null) user.setPostalCode(postalCode);
         if (city != null) user.setCity(city);
         if (country != null) user.setCountry(country);
-        if (birthDay != 0) user.setBirthDay(birthDay);
-        if (birthMonth != 0) user.setBirthMonth(birthMonth);
-        if (birthYear != 0) user.setBirthYear(birthYear);
+        if (country != null) user.setTaxNumber(taxNumber);
+        if (birthDay != null) user.setBirthDay(birthDay);
     }
 
     @Override
-    public boolean updateUser(User user, UserUpdateRequest userUpdateRequest) {
+    public boolean updateUser(User user, UserUpdateCommunicationModel userUpdateRequest) {
         if (userRepository.existsById(user.getId())) {
             userMapping(user, userUpdateRequest.getName(), userUpdateRequest.getSurname(),
                     userUpdateRequest.getPhoneNumber(), userUpdateRequest.getStreet(),
                     userUpdateRequest.getHouseNumber(), userUpdateRequest.getPostalCode(), userUpdateRequest.getCity(),
-                    userUpdateRequest.getCountry(), userUpdateRequest.getBirthDay(), userUpdateRequest.getBirthMonth(),
-                    userUpdateRequest.getBirthYear());
+                    userUpdateRequest.getCountry(), userUpdateRequest.getTaxNumber(), userUpdateRequest.getBirthDay());
             userRepository.save(user);
             return true;
         } else {
