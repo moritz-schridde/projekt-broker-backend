@@ -24,6 +24,7 @@ public class Share {
 
     private byte iconId;
 
+    @Getter
     private double price;
 
     private String category;

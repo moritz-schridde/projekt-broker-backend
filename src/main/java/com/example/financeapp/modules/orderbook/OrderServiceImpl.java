@@ -61,13 +61,17 @@ public class OrderServiceImpl implements OrderService{
         //if not then load and sort into lists accordingly
         //if(Order.reloadOrderbook){
 
-            buyMarket = orderRepository.findAllByStateAndOfferTypeAndOrderTypeAndShareIdOrderByTimestamp(Order.State.OPEN, Order.OrderType.MARKETORDER, Order.OfferType.BUY, shareId);
+        ArrayList<Order> test = orderRepository.findAllByState(Order.State.OPEN);
+        ArrayList<Order> test2 = orderRepository.findAllByOrderType(Order.OrderType.MARKETORDER);
+        ArrayList<Order> test3 = orderRepository.findAllByStateAndOrderType(Order.State.OPEN ,Order.OrderType.MARKETORDER);
 
-            sellMarket= orderRepository.findAllByStateAndOfferTypeAndOrderTypeAndShareIdOrderByTimestamp(Order.State.OPEN, Order.OrderType.MARKETORDER, Order.OfferType.SELL, shareId);
+            buyMarket = orderRepository.findAllByStateAndOrderTypeAndOfferTypeAndShareId(Order.State.OPEN, Order.OrderType.MARKETORDER, Order.OfferType.BUY, shareId);
 
-            buyMaxPrice = orderRepository.findAllByStateAndOfferTypeAndOrderTypeAndShareIdOrderByTimestamp(Order.State.OPEN, Order.OrderType.LIMITORDER, Order.OfferType.BUY, shareId);
+            sellMarket= orderRepository.findAllByStateAndOrderTypeAndOfferTypeAndShareId(Order.State.OPEN, Order.OrderType.MARKETORDER, Order.OfferType.SELL, shareId);
 
-            sellMinPrice =orderRepository.findAllByStateAndOfferTypeAndOrderTypeAndShareIdOrderByTimestamp(Order.State.OPEN, Order.OrderType.STOPORDER, Order.OfferType.SELL, shareId);
+            buyMaxPrice = orderRepository.findAllByStateAndOrderTypeAndOfferTypeAndShareId(Order.State.OPEN, Order.OrderType.LIMITORDER, Order.OfferType.BUY, shareId);
+
+            sellMinPrice =orderRepository.findAllByStateAndOrderTypeAndOfferTypeAndShareId(Order.State.OPEN, Order.OrderType.STOPORDER, Order.OfferType.SELL, shareId);
 
 
 
@@ -126,9 +130,9 @@ public class OrderServiceImpl implements OrderService{
     public void matchinAlgo(long shareId, ArrayList<Order> buyMarketList, ArrayList<Order> sellMarketList, ArrayList<Order> buyMaxPriceList, ArrayList<Order> sellMinPriceList) throws Exception{
         double referenzpreis = shareRepository.getShareById(shareId).getPrice();
 
-        if(sellMarketList!=null){
+        if(!sellMarketList.isEmpty()){
             long sellOrderId = sellMarketList.get(0).getId();
-            if (buyMarketList!=null){
+            if (!buyMarketList.isEmpty()){
                 long buyOrderId = buyMarketList.get(0).getId();
                 buyMarketList.remove(0);
                 sellMarketList.remove(0);
@@ -215,10 +219,7 @@ public class OrderServiceImpl implements OrderService{
 
 
     public void executeOrder(double refP, long sellOrderId, long buyOrderId) throws Exception{
-        //TODO geld abbuchen Aktein transferieren
-        //geld vom depot abbuchen
-        //aktien vom Verkäufer abziehen und dem Käufer gutschreiben
-        //Orders auf closed setzten
+        //TODO total numbers of shares anpassen und was ist mit total value
 
         Order sellOrder = orderRepository.getOrderById(sellOrderId);
         sellOrder.setState(Order.State.CLOSED);
