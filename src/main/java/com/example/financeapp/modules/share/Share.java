@@ -9,33 +9,28 @@ import javax.persistence.*;
 
 
 @Entity
+@Getter
+@Setter
 public class Share {
-    @Getter
-    @Setter
+
     @Id
     @GeneratedValue
     @NotNull
     private Long id;
 
-    @Getter
-    @Setter
     private String name;
 
-    @Getter
-    @Setter
+    private String wkn;
+
     private byte iconId;
 
-    @Getter
-    @Setter
     private double price;
 
-    @Getter
-    @Setter
     private String category;
 
-    public Share(@NotNull Long id, String name, byte iconId, double price, String category) {
-        this.id = id;
+    public Share(String name, String wkn, byte iconId, double price, String category) {
         this.name = name;
+        this.wkn = wkn;
         this.iconId = iconId;
         this.price = price;
         this.category = category;
