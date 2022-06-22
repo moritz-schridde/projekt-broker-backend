@@ -13,6 +13,8 @@ public class OrderInfoModel {
     //buy or sell value
     private double value;
 
+    @Getter
+    @Setter
     //The amount of how much shares the user wants to buy or sell
     private int count;
 }

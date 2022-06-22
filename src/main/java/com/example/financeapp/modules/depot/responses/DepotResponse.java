@@ -5,21 +5,7 @@ import lombok.Setter;
 public class DepotResponse {
     @Getter
     @Setter
-    private String shareName;
+    private double totalSpendMoney;
 
-    @Getter
-    @Setter
-    private String shareId;
-
-    @Getter
-    @Setter
-    private int shareAmount;
-
-    @Getter
-    @Setter
-    private double shareValue;
-
-    @Getter
-    @Setter
-    private String iconId;
+    private DepotShareInfoModel[] depotInfos;
 }
