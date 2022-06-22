@@ -23,6 +23,10 @@ public class Share {
 
     @Getter
     @Setter
+    private String shortname;
+
+    @Getter
+    @Setter
     private byte iconId;
 
     @Getter
@@ -32,6 +36,29 @@ public class Share {
     @Getter
     @Setter
     private String category;
+
+    @Getter
+    @Setter
+    private String wkn;
+
+    public Share(@NotNull Long id, String name, String shortname, byte iconId, double price, String category, String wkn) {
+        this.id = id;
+        this.name = name;
+        this.shortname = shortname;
+        this.iconId = iconId;
+        this.price = price;
+        this.category = category;
+        this.wkn = wkn;
+    }
+
+    public Share(@NotNull Long id, String name, String shortname, byte iconId, double price, String category) {
+        this.id = id;
+        this.name = name;
+        this.shortname = shortname;
+        this.iconId = iconId;
+        this.price = price;
+        this.category = category;
+    }
 
     public Share(@NotNull Long id, String name, byte iconId, double price, String category) {
         this.id = id;
