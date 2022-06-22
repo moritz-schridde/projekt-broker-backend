@@ -65,136 +65,95 @@ public class OrderServiceImpl implements OrderService{
         ArrayList<Order> test2 = orderRepository.findAllByOrderType(Order.OrderType.MARKETORDER);
         ArrayList<Order> test3 = orderRepository.findAllByStateAndOrderType(Order.State.OPEN ,Order.OrderType.MARKETORDER);
 
-            buyMarket = orderRepository.findAllByStateAndOrderTypeAndOfferTypeAndShareId(Order.State.OPEN, Order.OrderType.MARKETORDER, Order.OfferType.BUY, shareId);
-
-            sellMarket= orderRepository.findAllByStateAndOrderTypeAndOfferTypeAndShareId(Order.State.OPEN, Order.OrderType.MARKETORDER, Order.OfferType.SELL, shareId);
-
-            buyMaxPrice = orderRepository.findAllByStateAndOrderTypeAndOfferTypeAndShareId(Order.State.OPEN, Order.OrderType.LIMITORDER, Order.OfferType.BUY, shareId);
-
-            sellMinPrice =orderRepository.findAllByStateAndOrderTypeAndOfferTypeAndShareId(Order.State.OPEN, Order.OrderType.STOPORDER, Order.OfferType.SELL, shareId);
-
-
-
-            //TODO die anderen Listen vervollständigen 
-
-            /*
-            Order.setOrderBook(orderRepository.findAllByState("OPEN"));
-            ArrayList<Order> orderBook = new ArrayList<>(Order.getOrderBook());
-
-            orderBook.forEach(order -> {
-                if (order.getOfferType()== Order.OfferType.BUY) {
-                    buyOrders.add(order);
-                }
-                if (order.getOfferType()== Order.OfferType.SELL){
-                    sellOrders.add(order);
-                }});
-
-            if (request.getOfferType() == Order.OfferType.BUY) {
-                buyOrders.add(request);
-            }
-            if (request.getOfferType()== Order.OfferType.SELL){
-                sellOrders.add(request);
-            }
-
-            buyOrders.forEach(order -> {
-                if order.getOrderType()
-            });*/
-
-            Order.setReloadOrderbook(false);
-        //}
 
 
 
 
-
-        //TODO den einkommenden request richtig einordnen
-
-        /*if (request.getOfferType() == Order.OfferType.BUY) {
-            buyOrders.add(request);
-        }
-        if (request.getOfferType()== Order.OfferType.SELL){
-            sellOrders.add(request);
-        }
-
-         */
-
-
-
-        matchinAlgo(shareId, buyMarket, sellMarket, buyMaxPrice, sellMinPrice);
+        matchinAlgo(shareId);
 
 
         return request;
     }
 
 
-    public void matchinAlgo(long shareId, ArrayList<Order> buyMarketList, ArrayList<Order> sellMarketList, ArrayList<Order> buyMaxPriceList, ArrayList<Order> sellMinPriceList) throws Exception{
+    public void matchinAlgo(long shareId) throws Exception{
+
+        buyMarket = orderRepository.findAllByStateAndOrderTypeAndOfferTypeAndShareId(Order.State.OPEN, Order.OrderType.MARKETORDER, Order.OfferType.BUY, shareId);
+
+        sellMarket= orderRepository.findAllByStateAndOrderTypeAndOfferTypeAndShareId(Order.State.OPEN, Order.OrderType.MARKETORDER, Order.OfferType.SELL, shareId);
+
+        buyMaxPrice = orderRepository.findAllByStateAndOrderTypeAndOfferTypeAndShareId(Order.State.OPEN, Order.OrderType.LIMITORDER, Order.OfferType.BUY, shareId);
+
+        sellMinPrice =orderRepository.findAllByStateAndOrderTypeAndOfferTypeAndShareId(Order.State.OPEN, Order.OrderType.STOPORDER, Order.OfferType.SELL, shareId);
+
+
         double referenzpreis = shareRepository.getShareById(shareId).getPrice();
 
-        if(!sellMarketList.isEmpty()){
-            long sellOrderId = sellMarketList.get(0).getId();
-            if (!buyMarketList.isEmpty()){
-                long buyOrderId = buyMarketList.get(0).getId();
-                buyMarketList.remove(0);
-                sellMarketList.remove(0);
-                executeOrder(shareId, sellOrderId,buyOrderId);
+        if(!sellMarket.isEmpty()){
+            long sellOrderId = sellMarket.get(0).getId();
+            if (!buyMarket.isEmpty()){
+                long buyOrderId = buyMarket.get(0).getId();
+                buyMarket.remove(0);
+                sellMarket.remove(0);
+                executeOrder(referenzpreis, sellOrderId,buyOrderId);
 
                 //ruft sich selber wieder auf um zu prüfen ob weitere Matches möglich sind
-                matchinAlgo(shareId, buyMarketList, sellMarketList, buyMaxPriceList, sellMinPriceList);
+                matchinAlgo(shareId);
             }
-            else if(buyMaxPriceList!=null){
+            else if(buyMaxPrice!=null){
                 double highestbid=0.0;
                 Order bestBuyOrder=null;
-                for (Order order : buyMaxPriceList) {
+                for (Order order : buyMaxPrice) {
                     if (order.getMaxMinPreis() > highestbid) {
                         highestbid = order.getMaxMinPreis();
                         bestBuyOrder= order;
                     }
                 }
-                sellMarketList.remove(0); //Orders aus buch löschen
-                buyMaxPriceList.remove(bestBuyOrder);
+                sellMarket.remove(0); //Orders aus buch löschen
+                buyMaxPrice.remove(bestBuyOrder);
 
                 //Verkäufer verkauft zu jedem Preis und daher wird er mit dem Käufer gematcht der das meiste bietet.
                 executeOrder(highestbid, sellOrderId,bestBuyOrder.getId());
-                matchinAlgo(shareId, buyMarketList, sellMarketList, buyMaxPriceList, sellMinPriceList); //matching Algo erneut anstoßen falls durch neuen refP neue Matches möglich sind
+                matchinAlgo(shareId); //matching Algo erneut anstoßen falls durch neuen refP neue Matches möglich sind
 
             } //elseif
         }//if
 
-        else if(!buyMarketList.isEmpty()){
-            long buyOrderId = buyMarketList.get(0).getId();
-            if(sellMinPriceList!=null){
-                double lowestAcceptablePrice =sellMinPriceList.get(0).getMaxMinPreis();
-                Order sellOrder =sellMinPriceList.get(0);
-                for (Order order: sellMinPriceList){
+        else if(!buyMarket.isEmpty()){
+            long buyOrderId = buyMarket.get(0).getId();
+            if(sellMinPrice!=null){
+                double lowestAcceptablePrice =sellMinPrice.get(0).getMaxMinPreis();
+                Order sellOrder =sellMinPrice.get(0);
+                for (Order order: sellMinPrice){
                     if(order.getMaxMinPreis()<lowestAcceptablePrice){
                         lowestAcceptablePrice=order.getMaxMinPreis();
                         sellOrder=order;
                     }
                 }
-                buyMarketList.remove(0);
-                sellMinPriceList.remove(sellOrder);
+                buyMarket.remove(0);
+                sellMinPrice.remove(sellOrder);
 
                 executeOrder(lowestAcceptablePrice,  sellOrder.getId(),buyOrderId);
 
                 //matching Algo erneut anstoßen falls durch neuen refP neue Matches möglich sind
-                matchinAlgo(shareId, buyMarketList, sellMarketList, buyMaxPriceList, sellMinPriceList);
+                matchinAlgo(shareId);
             }
         }
 
-        else if(!sellMinPriceList.isEmpty() & !buyMaxPriceList.isEmpty()){
-            double highestBid=buyMaxPriceList.get(0).getMaxMinPreis();
-            Order bestBuyOrder = buyMaxPriceList.get(0);
-            double lowestAcceptablePrice = sellMinPriceList.get(0).getMaxMinPreis();
-            Order bestSellOrder = sellMinPriceList.get(0);
+        else if(!sellMinPrice.isEmpty() & !buyMaxPrice.isEmpty()){
+            double highestBid=buyMaxPrice.get(0).getMaxMinPreis();
+            Order bestBuyOrder = buyMaxPrice.get(0);
+            double lowestAcceptablePrice = sellMinPrice.get(0).getMaxMinPreis();
+            Order bestSellOrder = sellMinPrice.get(0);
 
-            for(Order order: sellMinPriceList){
+            for(Order order: sellMinPrice){
                 if(order.getMaxMinPreis()<lowestAcceptablePrice){
                     lowestAcceptablePrice=order.getMaxMinPreis();
                     bestSellOrder=order;
                 }
             }
 
-            for (Order order : buyMaxPriceList){
+            for (Order order : buyMaxPrice){
                 if(order.getMaxMinPreis()> highestBid){
                     highestBid = order.getMaxMinPreis();
                     bestBuyOrder= order;
@@ -208,7 +167,7 @@ public class OrderServiceImpl implements OrderService{
                 }else{
                     executeOrder(referenzpreis,  bestSellOrder.getId(),bestBuyOrder.getId());
                 }
-                matchinAlgo(shareId, buyMarketList, sellMarketList, buyMaxPriceList, sellMinPriceList);
+                matchinAlgo(shareId);
             }
         }
 
@@ -221,15 +180,37 @@ public class OrderServiceImpl implements OrderService{
     public void executeOrder(double refP, long sellOrderId, long buyOrderId) throws Exception{
         //TODO total numbers of shares anpassen und was ist mit total value
 
+
         Order sellOrder = orderRepository.getOrderById(sellOrderId);
-        sellOrder.setState(Order.State.CLOSED);
+        Order buyOrder= orderRepository.getOrderById(buyOrderId);
+
+
+        int orderVolume;
+        if (sellOrder.getCount()<buyOrder.getCount()){
+            orderVolume = sellOrder.getCount();
+            sellOrder.setState(Order.State.CLOSED);
+            buyOrder.setCount(buyOrder.getCount()-orderVolume);
+        }else if (sellOrder.getCount()>buyOrder.getCount()) {
+            orderVolume= buyOrder.getCount();
+            buyOrder.setState(Order.State.CLOSED);
+            sellOrder.setCount(sellOrder.getCount()-orderVolume);
+        }else {
+            orderVolume= buyOrder.getCount();
+            buyOrder.setState(Order.State.CLOSED);
+            sellOrder.setState(Order.State.CLOSED);
+        }
+
+
+
+
+
 
         Depot sellDepot = depotRepository.getById(sellOrder.getDepotId());
-        sellDepot.setTotalCash(sellDepot.getTotalCash()+(sellOrder.getCount()*refP));
+        sellDepot.setTotalCash(sellDepot.getTotalCash()+(orderVolume*refP));
 
         Share shareToSell = shareRepository.getShareById(sellOrder.getShareId());
         DepotShareAmount sellDepotShareAmount = depotShareAmountRepository.findDepotShareAmountByDepotAndShare(sellDepot, shareToSell);
-        sellDepotShareAmount.setAmount(sellDepotShareAmount.getAmount()-sellOrder.getCount());
+        sellDepotShareAmount.setAmount(sellDepotShareAmount.getAmount()-orderVolume);
         if (sellDepotShareAmount.getAmount()<0){
             throw new Exception("negative Share amount");
         }
@@ -237,11 +218,10 @@ public class OrderServiceImpl implements OrderService{
 
 
 
-        Order buyOrder= orderRepository.getOrderById(buyOrderId);
-        buyOrder.setState(Order.State.CLOSED);
+
 
         Depot buyDepot = depotRepository.getById(buyOrder.getDepotId());
-        buyDepot.setTotalCash(buyDepot.getTotalCash()-(buyOrder.getCount()*refP));
+        buyDepot.setTotalCash(buyDepot.getTotalCash()-(orderVolume*refP));
         if(buyDepot.getTotalCash()<0){
             throw  new Exception("nicht genug geld um die Aktien zu kaufen");
         }
@@ -251,7 +231,11 @@ public class OrderServiceImpl implements OrderService{
         if(buyDepotShareAmount==null){
             buyDepotShareAmount = new DepotShareAmount(shareToSell, buyDepot, 0);
         }
-        buyDepotShareAmount.setAmount(buyOrder.getCount());
+        buyDepotShareAmount.setAmount(buyDepotShareAmount.getAmount()+orderVolume);
+
+
+
+
 
 
         sellOrder =orderRepository.save(sellOrder);
