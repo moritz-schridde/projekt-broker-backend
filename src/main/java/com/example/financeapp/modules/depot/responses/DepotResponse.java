@@ -5,21 +5,10 @@ import lombok.Setter;
 public class DepotResponse {
     @Getter
     @Setter
-    private String shareName;
+    //Restliche freies Geld auf dem Konto
+    private double availableMoney;
 
     @Getter
     @Setter
-    private String shareId;
-
-    @Getter
-    @Setter
-    private int shareAmount;
-
-    @Getter
-    @Setter
-    private double shareValue;
-
-    @Getter
-    @Setter
-    private String iconId;
+    private DepotShareInfoModel[] shares;
 }
