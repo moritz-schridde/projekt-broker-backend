@@ -2,6 +2,7 @@ package com.example.financeapp.modules.user;
 
 import com.example.financeapp.modules.depot.Depot;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -14,6 +15,12 @@ public class UserServiceImplementation implements UserService {
     @Autowired
     public UserServiceImplementation(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @Override
+    public String getCurrentUsersEmail() {
+        return ((com.example.financeapp.auth.models.User) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal()).getEmail();
     }
 
     @Override

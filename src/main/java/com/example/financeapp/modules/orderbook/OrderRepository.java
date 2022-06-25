@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
+    List<Order> findAllByDepotIdAndShareId(Long depotId, Long shareId);
     Order getOrderById(Long id);
     List<Order> getAllByShareId(Long shareId);
     ArrayList<Order> findAllByState(Order.State state);

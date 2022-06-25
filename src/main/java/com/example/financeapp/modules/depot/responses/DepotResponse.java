@@ -2,24 +2,16 @@ package com.example.financeapp.modules.depot.responses;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+
 public class DepotResponse {
     @Getter
     @Setter
-    private String shareName;
+    //Restliche freies Geld auf dem Konto
+    private double availableMoney;
 
     @Getter
     @Setter
-    private String shareId;
-
-    @Getter
-    @Setter
-    private int shareAmount;
-
-    @Getter
-    @Setter
-    private double shareValue;
-
-    @Getter
-    @Setter
-    private String iconId;
+    private ArrayList<DepotShareInfoModel> shares;
 }

@@ -54,7 +54,7 @@ public class FinanceAppApplication {
             depoShareAmountRepository.save(buyerdsa);
 
 
-            User seller = new User("seller", "melk", "email2@mail.com", 12345,
+            User seller = new User("seller", "melk", "test2@example.com", 12345,
                     "street", "12", "12345", "city", "country",
                     "1", "2", "1995" );
             Depot sellerDepot = new Depot();
