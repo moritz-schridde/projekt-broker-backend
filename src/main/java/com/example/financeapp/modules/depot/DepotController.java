@@ -12,15 +12,17 @@ import java.util.ArrayList;
 @RequestMapping("/user/depot")
 public class DepotController {
 
+    private final DepotService depotService;
     @Autowired
-    public DepotController() {
-
+    public DepotController(DepotService depotService) {
+        this.depotService = depotService;
     }
 
     @GetMapping
-    public ResponseEntity<ArrayList<DepotResponse>> getSharesFromDepot() {
+    public ResponseEntity<ArrayList<DepotResponse>> getSharesFromDepot() throws Exception{
         ArrayList<DepotResponse> shareList = new ArrayList<>();
         shareList.add(new DepotResponse());
+        depotService.getUserDepot();
         return ResponseEntity.ok(shareList);
     }
 

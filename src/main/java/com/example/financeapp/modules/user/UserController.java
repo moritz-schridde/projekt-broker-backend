@@ -65,7 +65,7 @@ public class UserController {
         return (deleted) ? ResponseEntity.ok().build() : ResponseEntity.noContent().build();
     }
 
-    private String getCurrentUsersEmail() {
+    public static String getCurrentUsersEmail() {
         return ((com.example.financeapp.auth.models.User) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal()).getEmail();
     }
