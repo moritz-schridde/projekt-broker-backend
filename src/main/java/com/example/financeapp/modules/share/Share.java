@@ -37,9 +37,6 @@ public class Share {
     private String category;
 
 
-    @Getter
-    @Setter
-    private String wkn;
 
     public Share(String name, String shortname, byte iconId, double price, String category, String wkn) {
         this.name = name;
@@ -50,7 +47,7 @@ public class Share {
         this.wkn = wkn;
     }
 
-    public Share(String name, String shortname, byte iconId, double price, String category) {
+    /*public Share(String name, String shortname, byte iconId, double price, String category) {
         this.name = name;
         this.shortname = shortname;
         this.iconId = iconId;
@@ -65,7 +62,7 @@ public class Share {
         this.iconId = iconId;
         this.price = price;
         this.category = category;
-    }
+    }*/
 
     public Share () {
 

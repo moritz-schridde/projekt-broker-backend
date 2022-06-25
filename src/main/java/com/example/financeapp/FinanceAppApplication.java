@@ -31,9 +31,9 @@ public class FinanceAppApplication {
                            DepotRepository depotRepository, DepotShareAmountRepository depoShareAmountRepository) {
         return args -> {
 
-            Share s1 = new Share("SAP", (byte) 1, 133.46, "tech");
+            Share s1 = new Share("SAP", "SAP", (byte) 1, 133.46, "tech", "SAP");
             shareRepository.save(s1);
-            Share s2 = new Share("BASF", (byte) 2, 55.32, "chemie");
+            Share s2 = new Share("BASF", "BASF", (byte) 2, 55.32, "chemie", "BSF");
 
             shareRepository.save(s2);
             User u = new User("name", "surname", "email@mail.com", 12345,
