@@ -35,8 +35,12 @@ public class FinanceAppApplication {
                            DepotRepository depotRepository, DepotShareAmountRepository depoShareAmountRepository, OrderRepository orderRepository) {
         return args -> {
             Share s1 = new Share("SAP", "WKN", (byte) 1, 100.0, "tech");
+
+            //Share s1 = new Share("SAP", (byte) 1, 133.46, "tech");
             shareRepository.save(s1);
             Share s2 = new Share("BASF", "WKN", (byte) 2, 50.0, "chemie");
+            //Share s2 = new Share("BASF", (byte) 2, 55.32, "chemie");
+
             shareRepository.save(s2);
             User buyer = new User("buyer", "surname", "email@mail.com", 12345,
                     "street", "12", "12345", "city", "country",
@@ -83,6 +87,18 @@ public class FinanceAppApplication {
             orderRepository.save(buyOrder3);
 
 
+            /*User u = new User("name", "surname", "email3@mail.com", 12345,
+                    "street", "12", "12345", "city", "country", "TAX123TestWerzahltschonSteuern",
+                    "01.02.1995" );*/
+            Depot dp = new Depot();
+            //u.setMyDepot(dp);
+            DepotShareAmount dsa = new DepotShareAmount();
+            dsa.setDepot(dp);
+            dsa.setShare(s1);
+            dsa.setAmount(15);
+            depotRepository.save(dp);
+            //userRepository.save(u);
+            depoShareAmountRepository.save(dsa);
 
         };
     }
