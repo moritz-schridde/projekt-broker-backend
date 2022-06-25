@@ -73,6 +73,10 @@ public class Order {
     @Setter
     public Timestamp orderClosedAt;
 
+    @Getter
+    @Setter
+    public int alreadySoldOrBought;
+
 
     public Order(long id, long shareId, long depotId, int count, Timestamp timestamp, State state,
                  OfferType offerType, OrderType orderType, double maxMinPreis) {
@@ -117,6 +121,7 @@ public class Order {
         this.offerType = offerType;
         this.orderType = orderType;
         this.maxMinPreis = maxMinPreis;
+        this.alreadySoldOrBought=0;
     }
 
     public Order (){};

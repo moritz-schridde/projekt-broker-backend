@@ -175,15 +175,28 @@ public class OrderServiceImpl implements OrderService{
         if (sellOrder.getCount()<buyOrder.getCount()){
             orderVolume = sellOrder.getCount();
             sellOrder.setState(Order.State.CLOSED);
+            sellOrder.setCount(sellOrder.getCount()-orderVolume);
+            sellOrder.setAlreadySoldOrBought(sellOrder.getAlreadySoldOrBought()+orderVolume);
             buyOrder.setCount(buyOrder.getCount()-orderVolume);
+            buyOrder.setAlreadySoldOrBought(buyOrder.getAlreadySoldOrBought()+orderVolume);
         }else if (sellOrder.getCount()>buyOrder.getCount()) {
             orderVolume= buyOrder.getCount();
             buyOrder.setState(Order.State.CLOSED);
+            buyOrder.setCount(buyOrder.getCount()-orderVolume);
             sellOrder.setCount(sellOrder.getCount()-orderVolume);
+
+            sellOrder.setAlreadySoldOrBought(sellOrder.getAlreadySoldOrBought()+orderVolume);
+            buyOrder.setAlreadySoldOrBought(buyOrder.getAlreadySoldOrBought()+orderVolume);
         }else {
             orderVolume= buyOrder.getCount();
             buyOrder.setState(Order.State.CLOSED);
             sellOrder.setState(Order.State.CLOSED);
+
+            buyOrder.setCount(buyOrder.getCount()-orderVolume);
+            sellOrder.setCount(sellOrder.getCount()-orderVolume);
+
+            sellOrder.setAlreadySoldOrBought(sellOrder.getAlreadySoldOrBought()+orderVolume);
+            buyOrder.setAlreadySoldOrBought(buyOrder.getAlreadySoldOrBought()+orderVolume);
         }
 
 
