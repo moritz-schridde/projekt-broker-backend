@@ -5,12 +5,21 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import java.util.UUID;
 
+import com.example.financeapp.modules.user.User;
 
 
 @Entity
 public class Bank {
+
+    @Getter
+    @Setter
+    @ManyToOne
+    private User user;
     @Getter
     @Setter
     @Id
@@ -41,7 +50,7 @@ public class Bank {
     @Setter
     private long accountId;
 
-    public Bank(@NotNull String iban, String name, String surname, double amount, String bic, String type, long accountId) {
+    public Bank(@NotNull String iban, @NotNull User user , String name, String surname, double amount, String bic, String type, long accountId) {
         this.iban = iban;
         this.name = name;
         this.surname = surname;
@@ -49,6 +58,7 @@ public class Bank {
         this.bic = bic;
         this.type = type;
         this.accountId = accountId;
+        this.user = user;
     }
 
     public Bank(@NotNull String iban, double amount) {
@@ -60,7 +70,7 @@ public class Bank {
 
     }
 
-    enum mode{
+    enum mode {
         WITHDRAW,
         DEPOSIT
     }

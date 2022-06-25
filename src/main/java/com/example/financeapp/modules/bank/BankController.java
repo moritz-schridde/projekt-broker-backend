@@ -18,15 +18,18 @@ public class BankController {
     }
 
     @GetMapping
-    public ResponseEntity<Bank> getInformation() throws Exception {
-        Bank dummyResponse = new Bank("DE640230807324872943", "mustermann", "max", 1000.00, "XX1HdW", "Verrechnungskonto", 74902649612431L);
-        return ResponseEntity.ok(dummyResponse);
+    public ResponseEntity<List<Bank>> getInformation() throws Exception {
+        //Bank dummyResponse = new Bank("DE640230807324872943", "mustermann", "max", 1000.00, "XX1HdW", "Verrechnungskonto", 74902649612431L);
+
+        return ResponseEntity.ok(this.bankService.getBank());
     }
 
+
     @PostMapping("/withdraw")
-    public ResponseEntity<String> withdraw(@RequestBody double amount) throws Exception {
-        Boolean success = true;
-        if (success) {
+    public ResponseEntity<String> withdraw(@RequestBody double amount, @RequestBody String iban) throws Exception {
+        Boolean result = this.bankService.changeAmount(iban, amount, Bank.mode.WITHDRAW);
+
+        if (result) {
             return ResponseEntity.ok("Success");
         } else {
             return ResponseEntity.badRequest().body("Failed");
@@ -34,9 +37,10 @@ public class BankController {
     }
 
     @PostMapping("/deposit")
-    public ResponseEntity<String> deposit(@RequestBody double amount) throws Exception {
-        Boolean success = true;
-        if (success) {
+    public ResponseEntity<String> deposit(@RequestBody double amount, @RequestBody String iban) throws Exception {
+        Boolean result = this.bankService.changeAmount(iban, amount, Bank.mode.DEPOSIT);
+
+        if (result) {
             return ResponseEntity.ok("Success");
         } else {
             return ResponseEntity.badRequest().body("Failed");

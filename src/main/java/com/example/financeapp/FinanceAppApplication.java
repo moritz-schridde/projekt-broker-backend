@@ -28,14 +28,12 @@ public class FinanceAppApplication {
 
     @Bean
     CommandLineRunner init(ShareRepository shareRepository, UserRepository userRepository,
-                           DepotRepository depotRepository, DepotShareAmountRepository depoShareAmountRepository) {
+                           DepotRepository depotRepository, DepotShareAmountRepository depoShareAmountRepository, BankRepository bankRepository) {
         return args -> {
 
-            Share s1 = new Share("SAP", (byte) 1, 133.46, "tech");
+            Share s1 = new Share("SAP", "blub",  (byte) 1, 133.46, "tech", "lalala");
             shareRepository.save(s1);
-            Share s2 = new Share("BASF", (byte) 2, 55.32, "chemie");
 
-            shareRepository.save(s2);
             User u = new User("name", "surname", "email@mail.com", 12345,
                     "street", "12", "12345", "city", "country", "TAX123TestWerzahltschonSteuern",
                     "01.02.1995" );
@@ -45,19 +43,15 @@ public class FinanceAppApplication {
             dsa.setDepot(dp);
             dsa.setShare(s1);
             dsa.setAmount(15);
+            Bank b1 = new Bank("DE89370400440532013000", u, "Klaus", "Mayer", 25.5, "MANSDE66XXX", "blub", 1);
+            Bank b2 = new Bank("asdfasdfasdf", u, "Klaus", "Mayer", 25.5, "MANSDE66XXX", "blub", 1);
+
             depotRepository.save(dp);
             userRepository.save(u);
             depoShareAmountRepository.save(dsa);
-
-        };
-    }
-
-    @Bean
-    CommandLineRunner init2(BankRepository bankRepository
-    ) {
-        return args -> {
-            Bank b1 = new Bank("DE89370400440532013000", "Klaus", "Mayer", 25.5, "MANSDE66XXX", "blub", 1);
             bankRepository.save(b1);
+            bankRepository.save(b2);
         };
     }
+
 }
