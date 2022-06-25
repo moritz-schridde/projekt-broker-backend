@@ -58,9 +58,8 @@ public class ShareServiceImplementation implements ShareService {
     }
 
     @Override
-    public void postShare(String name, String shortname, double price, String category, byte iconId, String wkn) throws Exception {
-        Share share = new Share(name, shortname, iconId, price, category, wkn);
-
+    public void postShare(String name, String wkn, byte iconId, double price, String category) throws Exception {
+        Share share = new Share(name, wkn, iconId, price, category);
         shareRepository.save(share);
     }
 

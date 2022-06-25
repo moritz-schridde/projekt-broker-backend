@@ -1,8 +1,5 @@
 package com.example.financeapp.modules.user;
 
-import com.example.financeapp.modules.user.communication.models.UserCreateCommunicationModel;
-import com.example.financeapp.modules.user.communication.models.UserRequestCommunicationModel;
-import com.example.financeapp.modules.user.communication.models.UserUpdateCommunicationModel;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,18 +22,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping()
+    @GetMapping("/me")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<UserRequestCommunicationModel> getUser() {
+    public ResponseEntity<User> getUser() {
         String email = getCurrentUsersEmail();
-        User users = userService.getUserByEmail(email);
-        return ResponseEntity.ok(new UserRequestCommunicationModel());
+        return ResponseEntity.ok(userService.getUserByEmail(email));
     }
 
-    @PostMapping()
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Object> createUser(@RequestBody UserCreateCommunicationModel userCreateCommunicationModel) throws URISyntaxException {
-        UUID created = userService.createUser(userCreateCommunicationModel);
+    public ResponseEntity<Object> createUser(@RequestBody UserCreateRequest userCreateRequest) throws URISyntaxException {
+        UUID created = userService.createUser(userCreateRequest);
         if (created != null) {
             URI uri = new URIBuilder()
                     .addParameter("scheme", "https")
@@ -49,9 +45,9 @@ public class UserController {
         }
     }
 
-    @PutMapping()
+    @PutMapping("/me")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> updateUser(@RequestBody UserUpdateCommunicationModel userUpdateRequest) {
+    public ResponseEntity<Object> updateUser(@RequestBody UserUpdateRequest userUpdateRequest) {
         User user = userService.getUserByEmail(getCurrentUsersEmail());
         boolean updated = userService.updateUser(user, userUpdateRequest);
         if (updated) {
@@ -61,7 +57,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping()
+    @DeleteMapping("/me")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> deleteUser() {
         String email = getCurrentUsersEmail();

@@ -1,16 +1,12 @@
-package com.example.financeapp.modules.user.communication.models;
+package com.example.financeapp.modules.user;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
-
 @Getter
 @Setter
-@NotNull
-public class UserCreateCommunicationModel {
+public class UserUpdateRequest {
 
-    private String email;
     private String name;
     private String surname;
     private int phoneNumber;
@@ -19,6 +15,7 @@ public class UserCreateCommunicationModel {
     private String postalCode;
     private String city;
     private String country;
-    private String birthDate;
-    private String taxNumber;
+    private int birthDay;
+    private int birthMonth;
+    private int birthYear;
 }

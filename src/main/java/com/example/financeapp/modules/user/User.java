@@ -86,11 +86,17 @@ public class User {
     @Getter
     @Setter
     @NotNull
-    private String birthDate;
+    private int birthDay;
 
     @Getter
     @Setter
-    private String taxNumber;
+    @NotNull
+    private int birthMonth;
+
+    @Getter
+    @Setter
+    @NotNull
+    private int birthYear;
 
     @Setter
     @OneToOne
@@ -104,8 +110,8 @@ public class User {
                 @JsonProperty("phoneNumber") @NotNull int phoneNumber, @JsonProperty("street") @NotNull String street,
                 @JsonProperty("houseNumber") @NotNull String houseNumber,
                 @JsonProperty("postalCode") @NotNull String postalCode, @JsonProperty("city") @NotNull String city,
-                @JsonProperty("country") @NotNull String country, @JsonProperty("taxNumber") @NotNull String taxNumber,
-                @JsonProperty("birthDay") @NotNull String birthDate) {
+                @JsonProperty("country") @NotNull String country, @JsonProperty("birthDay") @NotNull String birthDay,
+                @JsonProperty("birthMonth") @NotNull String birthMonth, @JsonProperty("birthYear") @NotNull String birthYear) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -115,8 +121,9 @@ public class User {
         this.postalCode = postalCode;
         this.city = city;
         this.country = country;
-        this.taxNumber = taxNumber;
-        this.birthDate = birthDate;
+        this.birthDay = Integer.parseInt(birthDay);
+        this.birthMonth = Integer.parseInt(birthMonth);
+        this.birthYear = Integer.parseInt(birthYear);
     }
 
     @Override

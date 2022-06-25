@@ -23,8 +23,8 @@ public class UserTest {
         UUID uuid = UUID.randomUUID();
         System.out.println(uuid);
         User user = new User("name", "surname", "email@mail.com",
-                12345, "street", "12", "12345", "city", "country", "TAX123TestWerzahlrschonSteuern",
-                "01.02.1995" );
+                12345, "street", "12", "12345", "city", "country",
+                "1", "2", "1995" );
         JsonContent<User> content = tester.write(user);
         assertThat(content).hasJsonPathStringValue("userId", uuid.toString());
 

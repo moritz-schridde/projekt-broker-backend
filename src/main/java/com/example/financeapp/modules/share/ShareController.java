@@ -49,7 +49,7 @@ public class ShareController {
 
     @PutMapping("/{id}")
     public ResponseEntity postShare(@RequestHeader Share share) throws Exception {
-        shareService.postShare(share.getName(), share.getShortname(), share.getPrice(), share.getCategory(), share.getIconId(), share.getWkn());
+        shareService.postShare(share.getName(), share.getWkn(), share.getIconId(), share.getPrice(), share.getCategory());
         return ResponseEntity.ok("Order deleted Successfully");
     }
 

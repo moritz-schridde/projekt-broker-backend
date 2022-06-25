@@ -12,5 +12,5 @@ public class DepotPerformanceResponse {
 
     @Getter
     @Setter
-    private String timestamp;
+    private Timestamp timestamp;
 }

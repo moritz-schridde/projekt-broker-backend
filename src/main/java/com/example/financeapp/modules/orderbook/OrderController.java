@@ -1,8 +1,8 @@
 package com.example.financeapp.modules.orderbook;
 
-import com.example.financeapp.modules.orderbook.communication.models.OrderCommunicationModel;
-import com.example.financeapp.modules.orderbook.communication.models.OrderInfoModel;
-import com.example.financeapp.modules.share.Share;
+import com.example.financeapp.modules.orderbook.requests.OrderCreateRequest;
+import com.example.financeapp.modules.orderbook.requests.OrderUpdateRequest;
+import com.example.financeapp.modules.orderbook.responses.OrderResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,20 +14,15 @@ import java.util.ArrayList;
 public class OrderController {
 
     @GetMapping
-    public ResponseEntity<ArrayList<OrderCommunicationModel>> findAllOrders() {
-        ArrayList<OrderCommunicationModel> dummyOrderList = new ArrayList<>();
-        OrderCommunicationModel response = new OrderCommunicationModel();
-        Share exampleShareObject = new Share();
-        OrderInfoModel exampleInfoModel = new OrderInfoModel();
-        exampleInfoModel.setShare(exampleShareObject);
-        response.setInfo(exampleInfoModel);
-        dummyOrderList.add(response);
+    public ResponseEntity<ArrayList<OrderResponse>> findAllOrders() {
+        ArrayList<OrderResponse> dummyOrderList = new ArrayList<>();
+        dummyOrderList.add(new OrderResponse());
         return ResponseEntity.ok(dummyOrderList);
     }
 
 
     @PostMapping
-    public ResponseEntity<String> createOrder(@RequestBody @Valid OrderCommunicationModel createRequest) {
+    public ResponseEntity<String> createOrder(@RequestBody @Valid OrderCreateRequest createRequest) {
         boolean success = true;
         if (success) {
             return ResponseEntity.ok("Success");
@@ -37,7 +32,7 @@ public class OrderController {
     }
 
     @PutMapping
-    public ResponseEntity<String> updateOrder(@RequestBody @Valid OrderCommunicationModel updateRequest) {
+    public ResponseEntity<String> updateOrder(@RequestBody @Valid OrderUpdateRequest updateRequest) {
         boolean success = true;
         if (success) {
             return ResponseEntity.ok("Success");
