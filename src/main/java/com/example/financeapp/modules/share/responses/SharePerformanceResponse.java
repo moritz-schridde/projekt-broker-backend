@@ -9,9 +9,9 @@ public class SharePerformanceResponse {
 
     @Getter
     @Setter
-    private double currentValue;
+    private double value;
 
     @Getter
     @Setter
-    private Timestamp timestamp;
+    private String timestamp;
 }
