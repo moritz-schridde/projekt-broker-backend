@@ -9,6 +9,7 @@ import com.example.financeapp.modules.share.ShareRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -223,6 +224,11 @@ public class OrderServiceImpl implements OrderService{
 
 
 
+
+        buyOrder.setAgreedPrice(refP);
+        buyOrder.setOrderClosedAt(new Timestamp(System.currentTimeMillis()));
+        sellOrder.setAgreedPrice(refP);
+        sellOrder.setOrderClosedAt(new Timestamp(System.currentTimeMillis()));
 
 
 

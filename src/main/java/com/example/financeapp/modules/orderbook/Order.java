@@ -65,6 +65,14 @@ public class Order {
     @Setter
     public static ArrayList<Order> orderBook;
 
+    @Getter
+    @Setter
+    public double agreedPrice;
+
+    @Getter
+    @Setter
+    public Timestamp orderClosedAt;
+
 
     public Order(long id, long shareId, long depotId, int count, Timestamp timestamp, State state,
                  OfferType offerType, OrderType orderType, double maxMinPreis) {
