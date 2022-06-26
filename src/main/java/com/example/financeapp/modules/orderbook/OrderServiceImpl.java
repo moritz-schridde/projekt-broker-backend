@@ -4,14 +4,22 @@ import com.example.financeapp.modules.depot.Depot;
 import com.example.financeapp.modules.depot.DepotRepository;
 import com.example.financeapp.modules.depot.DepotShareAmount;
 import com.example.financeapp.modules.depot.DepotShareAmountRepository;
+import com.example.financeapp.modules.orderbook.communication.models.OrderCommunicationModel;
 import com.example.financeapp.modules.share.Share;
 import com.example.financeapp.modules.share.ShareRepository;
+import com.example.financeapp.modules.user.User;
+import com.example.financeapp.modules.user.UserService;
+import com.example.financeapp.modules.user.UserServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @Component
 public class OrderServiceImpl implements OrderService{
@@ -25,12 +33,25 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     DepotShareAmountRepository depotShareAmountRepository;
 
+    @Autowired
+    UserService userService;
+
 
     @Override
-    public List<Order> findAllOrders() {
+    public List<OrderCommunicationModel> findAllOrders()throws Exception {
         List<Order> orders =orderRepository.findAll();
-        List<Order> orderResponse = new ArrayList<>();
-        orders.forEach(order -> orderResponse.add(order));
+        List<OrderCommunicationModel> orderResponse = new ArrayList<>();
+
+
+            orders.forEach(order -> {
+                try {
+                    Share share = shareRepository.findById(order.getShareId()).orElseThrow(()-> new Exception ("Share not found "));
+                    orderResponse.add(new OrderCommunicationModel(order, share));
+                }catch (Exception e ){
+                    e.printStackTrace();
+                }
+            });
+
         return orderResponse;
     }
 
@@ -50,15 +71,31 @@ public class OrderServiceImpl implements OrderService{
     ArrayList<Order> sellMarket = new ArrayList<>();
 
     @Override
-    public Order createOrder(Order request) throws Exception {
-        long shareId = request.getShareId();
+    public Order createOrder(OrderCommunicationModel request) throws Exception {
+
+        Order order = new Order(request);
+        DateFormat df=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSZZ");
+        df.setTimeZone(TimeZone.getTimeZone("UTC+1"));
+        df.format(new Date());
+        String timestapm = df.toString();
+        order.setTimestamp(timestapm);
+
+        long shareId = request.getInfo().getShare().getId();
+
+        String email = userService.getCurrentUsersEmail();
+        User user = userService.getUserByEmail(email);
+        long depotId = user.getMyDepot().getId();
+
+        order.setDepotId(depotId);
+
+
         double referenzpreis = shareRepository.getShareById(shareId).getPrice();
-        orderRepository.save(request);
+        orderRepository.save(order);
 
         matchinAlgo(shareId);
 
 
-        return request;
+        return order;
     }
 
 
@@ -198,6 +235,7 @@ public class OrderServiceImpl implements OrderService{
             sellOrder.setAlreadySoldOrBought(sellOrder.getAlreadySoldOrBought()+orderVolume);
             buyOrder.setAlreadySoldOrBought(buyOrder.getAlreadySoldOrBought()+orderVolume);
         }
+
 
 
 

@@ -1,5 +1,6 @@
 package com.example.financeapp.modules.orderbook;
 
+import com.example.financeapp.modules.orderbook.communication.models.OrderCommunicationModel;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,7 +35,7 @@ public class Order {
 
     @Getter
     @Setter
-    private Timestamp timestamp;
+    private String timestamp;
 
 
 
@@ -78,7 +79,18 @@ public class Order {
     public int alreadySoldOrBought;
 
 
-    public Order(long id, long shareId, long depotId, int count, Timestamp timestamp, State state,
+    public Order (OrderCommunicationModel o){
+        this.offerType = o.getOfferType();
+        this.orderType= o.getOrderType();
+        this.state= State.OPEN;
+        this.timestamp = o.getTimestamp();
+        this.shareId =o.getInfo().getShare().getId();
+        this.maxMinPreis=o.getInfo().getValue();
+        this.count=o.getInfo().getCount();
+    }
+
+
+    /*public Order(long id, long shareId, long depotId, int count, Timestamp timestamp, State state,
                  OfferType offerType, OrderType orderType, double maxMinPreis) {
         this.id = id;
         this.shareId = shareId;
@@ -110,7 +122,7 @@ public class Order {
         this.offerType = offerType;
         this.orderType = orderType;
         this.maxMinPreis = maxMinPreis;
-    }
+    }*/
 
     public Order(long shareId, long depotId, int count, State state, OfferType offerType, OrderType orderType,
                  double maxMinPreis) {

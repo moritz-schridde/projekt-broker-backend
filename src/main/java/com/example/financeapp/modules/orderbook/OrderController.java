@@ -1,5 +1,6 @@
 package com.example.financeapp.modules.orderbook;
 
+import com.example.financeapp.modules.orderbook.communication.models.OrderCommunicationModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -16,15 +17,15 @@ public class OrderController {
     OrderService orderService;
 
     @GetMapping
-    public ResponseEntity<List<Order>> findAllOrders() {
+    public ResponseEntity<List<OrderCommunicationModel>> findAllOrders() throws Exception{
         return ResponseEntity.ok(orderService.findAllOrders());
     }
 
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody @Valid Order request)throws Exception{
+    public ResponseEntity<String> createOrder(@RequestBody @Valid OrderCommunicationModel request)throws Exception{
         Order order = orderService.createOrder(request);
-        return ResponseEntity.ok(order);
+        return ResponseEntity.ok("success");
     }
 
     @DeleteMapping("/{id}")
