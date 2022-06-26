@@ -20,14 +20,40 @@ public class Share {
 
     private String name;
 
+
+    @Getter
+    @Setter
+    private String shortname;
+
+    @Getter
+    @Setter
     private String wkn;
+
 
     private byte iconId;
 
-    @Getter
     private double price;
 
     private String category;
+
+
+
+    public Share(String name, String shortname, byte iconId, double price, String category, String wkn) {
+        this.name = name;
+        this.shortname = shortname;
+        this.iconId = iconId;
+        this.price = price;
+        this.category = category;
+        this.wkn = wkn;
+    }
+
+    /*public Share(String name, String shortname, byte iconId, double price, String category) {
+        this.name = name;
+        this.shortname = shortname;
+        this.iconId = iconId;
+        this.price = price;
+        this.category = category;
+    }
 
     public Share(String name, String wkn, byte iconId, double price, String category) {
         this.name = name;
@@ -35,23 +61,7 @@ public class Share {
         this.iconId = iconId;
         this.price = price;
         this.category = category;
-    }
-
-    public Share(@NotNull Long id, String name, String wkn, double price, String category) {
-        this.id = id;
-        this.name = name;
-        this.wkn = wkn;
-        this.price = price;
-        this.category = category;
-    }
-
-    public Share(String name, String wkn, double price, String category) {
-        this.id = id;
-        this.name = name;
-        this.wkn = wkn;
-        this.price = price;
-        this.category = category;
-    }
+    }*/
 
     public Share () {
 

@@ -29,7 +29,7 @@ public class ShareController {
     public ResponseEntity<Share> findShare(@PathVariable Long id) throws Exception {
         return ResponseEntity.ok(shareService.findShare(id));
     }
-  
+
     @GetMapping("/{id}/performance")
     public ResponseEntity<ArrayList<SharePerformanceResponse>> getSharePrice(@PathVariable Long id) throws Exception {
         ArrayList<SharePerformanceResponse> sharelist = new ArrayList<>();
@@ -49,7 +49,7 @@ public class ShareController {
 
     @PutMapping("/{id}")
     public ResponseEntity postShare(@RequestHeader Share share) throws Exception {
-        shareService.postShare(share.getName(), share.getWkn(), share.getIconId(), share.getPrice(), share.getCategory());
+        shareService.postShare(share.getName(), share.getShortname(), share.getPrice(), share.getCategory(), share.getIconId(), share.getWkn());
         return ResponseEntity.ok("Order deleted Successfully");
     }
 
