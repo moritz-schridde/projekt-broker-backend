@@ -43,8 +43,8 @@ public class FinanceAppApplication {
             dsa.setDepot(dp);
             dsa.setShare(s1);
             dsa.setAmount(15);
-            Bank b1 = new Bank("DE89370400440532013000", u, "Klaus", "Mayer", 25.5, "MANSDE66XXX", "blub", 1);
-            Bank b2 = new Bank("asdfasdfasdf", u, "Klaus", "Mayer", 25.5, "MANSDE66XXX", "blub", 1);
+            Bank b1 = new Bank("DE89370400440532013000", u, "Klaus", "Mayer", 25.5, "MANSDE66XXX", "blub");
+            Bank b2 = new Bank("asdfasdfasdf", u, "Klaus", "Mayer", 25.5, "MANSDE66XXX", "blub");
 
             depotRepository.save(dp);
             userRepository.save(u);

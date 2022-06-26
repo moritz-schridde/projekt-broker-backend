@@ -3,6 +3,7 @@ package com.example.financeapp.modules.bank;
 import com.example.financeapp.modules.user.User;
 import com.example.financeapp.modules.user.communication.models.UserCreateCommunicationModel;
 import com.example.financeapp.modules.user.communication.models.UserUpdateCommunicationModel;
+import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import com.example.financeapp.modules.user.UserRepository;
 import com.example.financeapp.modules.user.UserService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Component
@@ -47,6 +49,15 @@ public class BankServiceImplementation implements BankService {
     public List<Bank> getBank(){
         User user = userService.getUserByEmail("email@mail.com");
         return bankRepository.getBankByUser(user);
+    }
+
+    @Override
+    public Boolean create(Map<String, Object> body){
+
+        User user = userService.getUserByEmail("email@mail.com");
+        Bank bank = new Bank((String) body.get("iban"), user, (String) body.get("name"), (String) body.get("surname"), (double) body.get("amount"), (String) body.get("bic"), (String) body.get("type"));
+        bankRepository.save(bank);
+        return true;
     }
 
     public String getCurrentUsersEmail() {

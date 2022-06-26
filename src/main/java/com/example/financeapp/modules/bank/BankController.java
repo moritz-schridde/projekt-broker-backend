@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user/bank")
@@ -24,9 +25,23 @@ public class BankController {
         return ResponseEntity.ok(this.bankService.getBank());
     }
 
+    @PostMapping()
+    public ResponseEntity<String> create(@RequestBody Map<String, Object> body) throws Exception {
+
+        Boolean result = this.bankService.create(body);
+
+        if (result) {
+            return ResponseEntity.ok("Success");
+        } else {
+            return ResponseEntity.badRequest().body("Failed");
+        }
+    }
 
     @PostMapping("/withdraw")
-    public ResponseEntity<String> withdraw(@RequestBody double amount, @RequestBody String iban) throws Exception {
+    public ResponseEntity<String> withdraw(@RequestBody Map<String, Object> body) throws Exception {
+        double amount = (double) body.get("amount");
+        String iban = (String) body.get("iban");
+
         Boolean result = this.bankService.changeAmount(iban, amount, Bank.mode.WITHDRAW);
 
         if (result) {
@@ -37,7 +52,10 @@ public class BankController {
     }
 
     @PostMapping("/deposit")
-    public ResponseEntity<String> deposit(@RequestBody double amount, @RequestBody String iban) throws Exception {
+    public ResponseEntity<String> deposit(@RequestBody Map<String, Object> body) throws Exception {
+        double amount = (double) body.get("amount");
+        String iban = (String) body.get("iban");
+
         Boolean result = this.bankService.changeAmount(iban, amount, Bank.mode.DEPOSIT);
 
         if (result) {

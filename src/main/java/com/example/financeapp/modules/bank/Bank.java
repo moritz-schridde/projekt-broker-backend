@@ -50,21 +50,16 @@ public class Bank {
     @Setter
     private long accountId;
 
-    public Bank(@NotNull String iban, @NotNull User user , String name, String surname, double amount, String bic, String type, long accountId) {
+    public Bank(@NotNull String iban, @NotNull User user , String name, String surname, double amount, String bic, String type) {
         this.iban = iban;
         this.name = name;
         this.surname = surname;
         this.amount = amount;
         this.bic = bic;
         this.type = type;
-        this.accountId = accountId;
         this.user = user;
     }
 
-    public Bank(@NotNull String iban, double amount) {
-        this.iban = iban;
-        this.amount = amount;
-    }
 
     public Bank() {
 
