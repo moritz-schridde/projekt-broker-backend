@@ -14,9 +14,12 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 @Component
 public class DepotServiceImplementation implements DepotService {
@@ -43,7 +46,7 @@ public class DepotServiceImplementation implements DepotService {
         for(int n=0; n < 30; n++) {
             depotValuePerDay[n] = 0.0;
         }
-        LocalDate tomorrow = LocalDate.now(ZoneOffset.UTC).plusDays( 1 ) ;
+        LocalDate tomorrow = LocalDate.now(ZoneOffset.UTC).plusDays( 2 ) ;
 
         for(int j=0; j < depotShares.size(); j++) {
             Long shareId = depotShares.get(j).getShare().getId();
@@ -91,7 +94,11 @@ public class DepotServiceImplementation implements DepotService {
             OffsetDateTime odtDate = tomorrow.minusDays( (l + 1)).atTime( OffsetTime.MIN );
             Timestamp sqlDate = Timestamp.valueOf(odtDate.toLocalDate().atStartOfDay());
             DepotPerformanceResponse performancePerDay = new DepotPerformanceResponse();
-            performancePerDay.setTimestamp(sqlDate);
+
+            DateFormat df=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSZZ");
+            df.setTimeZone(TimeZone.getTimeZone("UTC+1"));
+            String timestamp = df.format(sqlDate);
+            performancePerDay.setTimestamp(timestamp);
             performancePerDay.setValue(depotValuePerDay[(l - 1)]);
             response.add(performancePerDay);
         }
