@@ -30,7 +30,7 @@ public class BankServiceImplementation implements BankService {
     @Override
     public Boolean changeAmount(String iban, double amount, Bank.mode mode) throws Exception {
 
-        int sign = (mode == Bank.mode.WITHDRAW ? 1 : -1);
+        int sign = (mode == Bank.mode.WITHDRAW ? -1 : 1);
 
         Bank bank2save = bankRepository.getBankByIban(iban);
 
@@ -55,7 +55,7 @@ public class BankServiceImplementation implements BankService {
     public Boolean create(Map<String, Object> body){
 
         User user = userService.getUserByEmail("email@mail.com");
-        Bank bank = new Bank((String) body.get("iban"), user, (String) body.get("name"), (String) body.get("surname"), (double) body.get("amount"), (String) body.get("bic"), (String) body.get("type"));
+        Bank bank = new Bank((String) body.get("kontoId"), user, (String) body.get("name"), (String) body.get("surname"), (double) body.get("amount"), (String) body.get("bic"), (String) body.get("type"));
         bankRepository.save(bank);
         return true;
     }

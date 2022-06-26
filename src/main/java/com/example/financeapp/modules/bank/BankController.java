@@ -40,7 +40,7 @@ public class BankController {
     @PostMapping("/withdraw")
     public ResponseEntity<String> withdraw(@RequestBody Map<String, Object> body) throws Exception {
         double amount = (double) body.get("amount");
-        String iban = (String) body.get("iban");
+        String iban = (String) body.get("kontoId");
 
         Boolean result = this.bankService.changeAmount(iban, amount, Bank.mode.WITHDRAW);
 
@@ -54,7 +54,7 @@ public class BankController {
     @PostMapping("/deposit")
     public ResponseEntity<String> deposit(@RequestBody Map<String, Object> body) throws Exception {
         double amount = (double) body.get("amount");
-        String iban = (String) body.get("iban");
+        String iban = (String) body.get("kontoId");
 
         Boolean result = this.bankService.changeAmount(iban, amount, Bank.mode.DEPOSIT);
 
