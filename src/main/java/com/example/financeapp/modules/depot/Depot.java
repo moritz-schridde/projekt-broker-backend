@@ -22,15 +22,15 @@ public class Depot {
     private int totalNumberShares;
 
     @Setter
-    @OneToMany(mappedBy = "share")
+    @OneToMany(mappedBy = "depot")
     private List<DepotShareAmount> mySharesAmount;
 
     @Setter
     @NotNull
-    private int totalValue; // in € Cent
+    private double totalValue; // in €
 
     @Setter
-    private int totalCash; // in € Cent
+    private double totalCash; // in €
 
     public Depot() {
 

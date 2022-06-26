@@ -38,7 +38,7 @@ public class FinanceAppApplication {
             shareRepository.save(s1);
             Share s2 = new Share("BASF", "WKN", (byte) 2, 50.0, "chemie");
             shareRepository.save(s2);
-            User buyer = new User("buyer", "surname", "email@mail.com", 12345,
+            User buyer = new User("buyer", "surname", "niklas@example.com", 12345,
                     "street", "12", "12345", "city", "country",
                     "1", "2", "1995" );
             Depot buyerDepot = new Depot();
@@ -54,7 +54,7 @@ public class FinanceAppApplication {
             depoShareAmountRepository.save(buyerdsa);
 
 
-            User seller = new User("seller", "melk", "test2@example.com", 12345,
+            User seller = new User("seller", "melk", "davit@example.com", 12345,
                     "street", "12", "12345", "city", "country",
                     "1", "2", "1995" );
             Depot sellerDepot = new Depot();
@@ -73,12 +73,12 @@ public class FinanceAppApplication {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
             Order buyOrder = new Order(1,3,5,  Order.State.OPEN,  Order.OfferType.BUY, Order.OrderType.MARKETORDER, 0);
-            Order buyOrder2 = new Order(1,3,5,  Order.State.OPEN,  Order.OfferType.BUY, Order.OrderType.MARKETORDER, 0);
+            //Order buyOrder2 = new Order(1,3,5,  Order.State.OPEN,  Order.OfferType.BUY, Order.OrderType.MARKETORDER, 0);
             Order sellOrder  = new Order(1,5,15,  Order.State.OPEN,  Order.OfferType.SELL, Order.OrderType.MARKETORDER, 0);
             Order buyOrder3 = new Order(1,3,5,  Order.State.OPEN,  Order.OfferType.BUY, Order.OrderType.LIMITORDER, 90);
 
             orderRepository.save(buyOrder);
-            orderRepository.save(buyOrder2);
+            //orderRepository.save(buyOrder2);
             orderRepository.save(sellOrder);
             orderRepository.save(buyOrder3);
 

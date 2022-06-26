@@ -38,9 +38,11 @@ public class DepotController {
     }
 
     @GetMapping("/performance")
-    public ResponseEntity<ArrayList<DepotPerformanceResponse>> getPerformanceForDepot() {
+    public ResponseEntity<ArrayList<DepotPerformanceResponse>> getPerformanceForDepot() throws Exception {
         ArrayList<DepotPerformanceResponse> shareList = new ArrayList<>();
         shareList.add(new DepotPerformanceResponse());
-        return ResponseEntity.ok(shareList);
+        ArrayList<DepotPerformanceResponse> response = depotService.getDepotPerformance();
+
+        return ResponseEntity.ok(response);
     }
 }

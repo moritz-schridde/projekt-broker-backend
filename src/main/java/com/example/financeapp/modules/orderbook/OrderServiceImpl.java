@@ -205,7 +205,7 @@ public class OrderServiceImpl implements OrderService{
 
 
         Depot sellDepot = depotRepository.getById(sellOrder.getDepotId());
-        sellDepot.setTotalCash((int) (sellDepot.getTotalCash()+(orderVolume*refP)));
+        sellDepot.setTotalCash(sellDepot.getTotalCash()+(orderVolume*refP));
 
         Share shareToSell = shareRepository.getShareById(sellOrder.getShareId());
         DepotShareAmount sellDepotShareAmount = depotShareAmountRepository.findDepotShareAmountByDepotAndShare(sellDepot, shareToSell);
@@ -222,9 +222,9 @@ public class OrderServiceImpl implements OrderService{
 
 
         Depot buyDepot = depotRepository.getById(buyOrder.getDepotId());
-        buyDepot.setTotalCash((int) (buyDepot.getTotalCash()-(orderVolume*refP)));
+        buyDepot.setTotalCash(buyDepot.getTotalCash()-(orderVolume*refP));
         if(buyDepot.getTotalCash()<0){
-            throw  new Exception("nicht genug geld um die Aktien zu kaufen");
+            throw  new Exception(buyDepot.getTotalCash() + "#"+ buyOrder.getCount()+"#"+ "nicht genug geld um die Aktien zu kaufen");
         }
 
         // depot share amout suchen und hochzählen wenn nciht vorhanden neu anlegen
