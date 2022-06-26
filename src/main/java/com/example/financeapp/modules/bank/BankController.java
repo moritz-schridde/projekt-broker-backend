@@ -1,5 +1,7 @@
 package com.example.financeapp.modules.bank;
 
+import com.example.financeapp.modules.bank.models.BankRequestCommunicationModel;
+import com.example.financeapp.modules.bank.models.BankRequestCommunicationModelCreate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +28,7 @@ public class BankController {
     }
 
     @PostMapping()
-    public ResponseEntity<String> create(@RequestBody Map<String, Object> body) throws Exception {
+    public ResponseEntity<String> create(@RequestBody BankRequestCommunicationModelCreate body) throws Exception {
 
         Boolean result = this.bankService.create(body);
 
@@ -38,9 +40,9 @@ public class BankController {
     }
 
     @PostMapping("/withdraw")
-    public ResponseEntity<String> withdraw(@RequestBody Map<String, Object> body) throws Exception {
-        double amount = (double) body.get("amount");
-        String iban = (String) body.get("kontoId");
+    public ResponseEntity<String> withdraw(@RequestBody BankRequestCommunicationModel body) throws Exception {
+        double amount = (double) body.getAmount();
+        String iban = (String) body.getKontoId();
 
         Boolean result = this.bankService.changeAmount(iban, amount, Bank.mode.WITHDRAW);
 
@@ -52,9 +54,9 @@ public class BankController {
     }
 
     @PostMapping("/deposit")
-    public ResponseEntity<String> deposit(@RequestBody Map<String, Object> body) throws Exception {
-        double amount = (double) body.get("amount");
-        String iban = (String) body.get("kontoId");
+    public ResponseEntity<String> deposit(@RequestBody BankRequestCommunicationModel body) throws Exception {
+        double amount = (double) body.getAmount();
+        String iban = (String) body.getKontoId();
 
         Boolean result = this.bankService.changeAmount(iban, amount, Bank.mode.DEPOSIT);
 

@@ -1,5 +1,6 @@
 package com.example.financeapp.modules.bank;
 
+import com.example.financeapp.modules.bank.models.BankRequestCommunicationModelCreate;
 import com.example.financeapp.modules.user.User;
 import com.example.financeapp.modules.user.communication.models.UserCreateCommunicationModel;
 import com.example.financeapp.modules.user.communication.models.UserUpdateCommunicationModel;
@@ -34,7 +35,8 @@ public class BankServiceImplementation implements BankService {
 
         Bank bank2save = bankRepository.getBankByIban(iban);
 
-        User user = userService.getUserByEmail(getCurrentUsersEmail());
+        //User user = userService.getUserByEmail(getCurrentUsersEmail());
+        User user = userService.getUserByEmail("email@email.com");
 
         if(user == bank2save.getUser()){
             bank2save.setAmount(amount * sign + bank2save.getAmount());
@@ -47,15 +49,17 @@ public class BankServiceImplementation implements BankService {
 
     @Override
     public List<Bank> getBank(){
-        User user = userService.getUserByEmail(getCurrentUsersEmail());
+        //User user = userService.getUserByEmail(getCurrentUsersEmail());
+        User user = userService.getUserByEmail("email@email.com");
         return bankRepository.getBankByUser(user);
     }
 
     @Override
-    public Boolean create(Map<String, Object> body){
+    public Boolean create(BankRequestCommunicationModelCreate body){
 
-        User user = userService.getUserByEmail(getCurrentUsersEmail());
-        Bank bank = new Bank((String) body.get("kontoId"), user, (String) body.get("name"), (String) body.get("surname"), (double) body.get("amount"), (String) body.get("bic"), (String) body.get("type"));
+        //User user = userService.getUserByEmail(getCurrentUsersEmail());
+        User user = userService.getUserByEmail("email@email.com");
+        Bank bank = new Bank(body.getKontoId(), user, body.getName(),  body.getSurname(),  body.getAmount(),body.getBic(), body.getType());
         bankRepository.save(bank);
         return true;
     }
