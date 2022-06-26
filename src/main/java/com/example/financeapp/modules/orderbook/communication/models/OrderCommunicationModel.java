@@ -1,7 +1,6 @@
 package com.example.financeapp.modules.orderbook.communication.models;
 
 import com.example.financeapp.modules.orderbook.Order;
-import com.example.financeapp.modules.orderbook.OrderEnums;
 import com.example.financeapp.modules.share.Share;
 import com.sun.istack.NotNull;
 import lombok.Getter;
@@ -52,7 +51,7 @@ public class OrderCommunicationModel {
         this.offerType= o.getOfferType();
         this.orderType=o.getOrderType();
         this.state=o.getState();
-        this.timestamp= o.getTimestamp();
+        this.timestamp= o.getTimestamp2();
         this.info = model;
     }
 

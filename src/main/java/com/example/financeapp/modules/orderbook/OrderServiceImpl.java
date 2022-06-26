@@ -9,7 +9,6 @@ import com.example.financeapp.modules.share.Share;
 import com.example.financeapp.modules.share.ShareRepository;
 import com.example.financeapp.modules.user.User;
 import com.example.financeapp.modules.user.UserService;
-import com.example.financeapp.modules.user.UserServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -78,7 +77,7 @@ public class OrderServiceImpl implements OrderService{
         df.setTimeZone(TimeZone.getTimeZone("UTC+1"));
         //df.format(new Date());
         String timestapm = df.format(new Date());
-        order.setTimestamp(timestapm);
+        order.setTimestamp2(timestapm);
 
         long shareId = request.getInfo().getShare().getId();
 

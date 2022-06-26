@@ -35,9 +35,12 @@ public class Order {
 
     @Getter
     @Setter
-    private String timestamp;
+    private String timestamp2;
 
 
+    @Getter
+    @Setter
+    private Timestamp timestamp;
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "enum('OPEN', 'CLOSED')")
@@ -83,10 +86,12 @@ public class Order {
         this.offerType = o.getOfferType();
         this.orderType= o.getOrderType();
         this.state= State.OPEN;
-        this.timestamp = o.getTimestamp();
+        this.timestamp2 = o.getTimestamp();
         this.shareId =o.getInfo().getShare().getId();
         this.maxMinPreis=o.getInfo().getValue();
         this.count=o.getInfo().getCount();
+        this.timestamp= new Timestamp(System.currentTimeMillis());
+
     }
 
 
@@ -134,6 +139,7 @@ public class Order {
         this.orderType = orderType;
         this.maxMinPreis = maxMinPreis;
         this.alreadySoldOrBought=0;
+        this.timestamp= new Timestamp(System.currentTimeMillis());
     }
 
     public Order (){};
