@@ -34,7 +34,7 @@ public class BankServiceImplementation implements BankService {
 
         Bank bank2save = bankRepository.getBankByIban(iban);
 
-        User user = userService.getUserByEmail("email@mail.com");
+        User user = userService.getUserByEmail(getCurrentUsersEmail());
 
         if(user == bank2save.getUser()){
             bank2save.setAmount(amount * sign + bank2save.getAmount());
@@ -47,14 +47,14 @@ public class BankServiceImplementation implements BankService {
 
     @Override
     public List<Bank> getBank(){
-        User user = userService.getUserByEmail("email@mail.com");
+        User user = userService.getUserByEmail(getCurrentUsersEmail());
         return bankRepository.getBankByUser(user);
     }
 
     @Override
     public Boolean create(Map<String, Object> body){
 
-        User user = userService.getUserByEmail("email@mail.com");
+        User user = userService.getUserByEmail(getCurrentUsersEmail());
         Bank bank = new Bank((String) body.get("kontoId"), user, (String) body.get("name"), (String) body.get("surname"), (double) body.get("amount"), (String) body.get("bic"), (String) body.get("type"));
         bankRepository.save(bank);
         return true;
