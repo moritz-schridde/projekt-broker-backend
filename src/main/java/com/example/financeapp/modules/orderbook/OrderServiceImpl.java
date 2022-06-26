@@ -76,8 +76,8 @@ public class OrderServiceImpl implements OrderService{
         Order order = new Order(request);
         DateFormat df=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSZZ");
         df.setTimeZone(TimeZone.getTimeZone("UTC+1"));
-        df.format(new Date());
-        String timestapm = df.toString();
+        //df.format(new Date());
+        String timestapm = df.format(new Date());
         order.setTimestamp(timestapm);
 
         long shareId = request.getInfo().getShare().getId();
