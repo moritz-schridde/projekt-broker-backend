@@ -1,5 +1,7 @@
 package com.example.financeapp.modules.user.communication.models;
 
+import com.example.financeapp.modules.user.User;
+
 import lombok.Getter;
 import lombok.Setter;
 

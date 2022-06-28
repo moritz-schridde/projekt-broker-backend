@@ -1,9 +1,14 @@
 package com.example.financeapp.modules.bank;
 
+import com.example.financeapp.modules.bank.models.BankRequestCommunicationModelCreate;
+
 import java.util.List;
 
 public interface BankService {
-    Bank getBank(String iban) throws Exception;
-    Bank changeAmount(String iban, double amount, Bank.mode mode) throws Exception;
+    List<Bank> getBank() throws Exception;
+
+    Boolean changeAmount(String iban, double amount, Bank.mode mode) throws Exception;
+
+    Boolean create(BankRequestCommunicationModelCreate body) throws Exception;
 
 }

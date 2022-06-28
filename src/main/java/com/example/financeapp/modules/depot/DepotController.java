@@ -9,33 +9,43 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user/depot")
 public class DepotController {
 
+    private final DepotService depotService;
     @Autowired
-    public DepotController() {
-
+    public DepotController(DepotService depotService) {
+        this.depotService = depotService;
     }
 
     @GetMapping
-    public ResponseEntity<ArrayList<DepotResponse>> getSharesFromDepot() {
-        ArrayList<DepotResponse> shareList = new ArrayList<>();
+    public ResponseEntity<DepotResponse> getSharesFromDepot() throws Exception{
+        DepotResponse userDepot = depotService.getUserDepotShareList();
+
+        /*ArrayList<DepotResponse> shareList = new ArrayList<>();
+
         DepotResponse response = new DepotResponse();
         DepotShareInfoModel[] shareInfos = new DepotShareInfoModel[5];
         DepotShareInfoModel shareInfoModel = new DepotShareInfoModel();
         shareInfoModel.setShare(new Share());
         shareInfos[0] = shareInfoModel;
         response.setShares(shareInfos);
-        shareList.add(response);
-        return ResponseEntity.ok(shareList);
+
+        shareList.add(response);*/
+
+        return ResponseEntity.ok(userDepot);
+
     }
 
     @GetMapping("/performance")
-    public ResponseEntity<ArrayList<DepotPerformanceResponse>> getPerformanceForDepot() {
+    public ResponseEntity<ArrayList<DepotPerformanceResponse>> getPerformanceForDepot() throws Exception {
         ArrayList<DepotPerformanceResponse> shareList = new ArrayList<>();
         shareList.add(new DepotPerformanceResponse());
-        return ResponseEntity.ok(shareList);
+        ArrayList<DepotPerformanceResponse> response = depotService.getDepotPerformance();
+
+        return ResponseEntity.ok(response);
     }
 }

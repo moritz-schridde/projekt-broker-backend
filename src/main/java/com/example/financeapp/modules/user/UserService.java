@@ -7,6 +7,8 @@ import java.util.UUID;
 
 public interface UserService {
 
+    String getCurrentUsersEmail();
+
     User getUserByEmail(String email);
 
     UUID createUser(UserCreateCommunicationModel userCreateCommunicationModel);

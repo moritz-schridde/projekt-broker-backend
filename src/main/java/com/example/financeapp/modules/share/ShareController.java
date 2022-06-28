@@ -29,7 +29,7 @@ public class ShareController {
     public ResponseEntity<Share> findShare(@PathVariable Long id) throws Exception {
         return ResponseEntity.ok(shareService.findShare(id));
     }
-  
+
     @GetMapping("/{id}/performance")
     public ResponseEntity<ArrayList<SharePerformanceResponse>> getSharePrice(@PathVariable Long id) throws Exception {
         ArrayList<SharePerformanceResponse> sharelist = new ArrayList<>();

@@ -28,9 +28,11 @@ public class UserController {
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<UserRequestCommunicationModel> getUser() {
-        String email = getCurrentUsersEmail();
-        User users = userService.getUserByEmail(email);
-        return ResponseEntity.ok(new UserRequestCommunicationModel());
+        String email = userService.getCurrentUsersEmail();
+        User user = userService.getUserByEmail(email);
+        UserRequestCommunicationModel answerModel = new UserRequestCommunicationModel(user);
+        return ResponseEntity.ok(answerModel);
+
     }
 
     @PostMapping()
@@ -52,7 +54,7 @@ public class UserController {
     @PutMapping()
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> updateUser(@RequestBody UserUpdateCommunicationModel userUpdateRequest) {
-        User user = userService.getUserByEmail(getCurrentUsersEmail());
+        User user = userService.getUserByEmail(userService.getCurrentUsersEmail());
         boolean updated = userService.updateUser(user, userUpdateRequest);
         if (updated) {
             return ResponseEntity.ok().build();
@@ -64,13 +66,9 @@ public class UserController {
     @DeleteMapping()
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> deleteUser() {
-        String email = getCurrentUsersEmail();
+        String email = userService.getCurrentUsersEmail();
         boolean deleted = userService.deleteUser(userService.getUserByEmail(email));
         return (deleted) ? ResponseEntity.ok().build() : ResponseEntity.noContent().build();
     }
 
-    private String getCurrentUsersEmail() {
-        return ((com.example.financeapp.auth.models.User) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal()).getEmail();
-    }
 }

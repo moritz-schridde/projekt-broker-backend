@@ -1,57 +1,39 @@
 package com.example.financeapp.modules.orderbook;
 
 import com.example.financeapp.modules.orderbook.communication.models.OrderCommunicationModel;
-import com.example.financeapp.modules.orderbook.communication.models.OrderInfoModel;
-import com.example.financeapp.modules.share.Share;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.RequestEntity;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/order")
 public class OrderController {
 
+    @Autowired
+    OrderService orderService;
+
     @GetMapping
-    public ResponseEntity<ArrayList<OrderCommunicationModel>> findAllOrders() {
-        ArrayList<OrderCommunicationModel> dummyOrderList = new ArrayList<>();
-        OrderCommunicationModel response = new OrderCommunicationModel();
-        Share exampleShareObject = new Share();
-        OrderInfoModel exampleInfoModel = new OrderInfoModel();
-        exampleInfoModel.setShare(exampleShareObject);
-        response.setInfo(exampleInfoModel);
-        dummyOrderList.add(response);
-        return ResponseEntity.ok(dummyOrderList);
+    public ResponseEntity<List<OrderCommunicationModel>> findAllOrders() throws Exception{
+        return ResponseEntity.ok(orderService.findAllOrders());
+
     }
 
 
     @PostMapping
-    public ResponseEntity<String> createOrder(@RequestBody @Valid OrderCommunicationModel createRequest) {
-        boolean success = true;
-        if (success) {
-            return ResponseEntity.ok("Success");
-        } else {
-            return ResponseEntity.badRequest().body("Failed");
-        }
+
+    public ResponseEntity<String> createOrder(@RequestBody @Valid OrderCommunicationModel request)throws Exception{
+        Order order = orderService.createOrder(request);
+        return ResponseEntity.ok("success");
     }
 
-    @PutMapping
-    public ResponseEntity<String> updateOrder(@RequestBody @Valid OrderCommunicationModel updateRequest) {
-        boolean success = true;
-        if (success) {
-            return ResponseEntity.ok("Success");
-        } else {
-            return ResponseEntity.badRequest().body("Failed");
-        }
-    }
-
-    @DeleteMapping ResponseEntity<String> deleteOrder(@RequestBody String[] orderId) {
-        boolean success = true;
-        if (success) {
-            return ResponseEntity.ok("Success");
-        } else {
-            return ResponseEntity.badRequest().body("Failed");
-        }
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteOrder(@PathVariable Long id) throws Exception {
+        orderService.deleteOrder(id);
+        return ResponseEntity.ok("Order deleted Successfully");
     }
 }

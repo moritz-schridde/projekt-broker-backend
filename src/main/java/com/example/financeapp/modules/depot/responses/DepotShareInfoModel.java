@@ -18,3 +18,4 @@ public class DepotShareInfoModel {
     @Setter
     private Share share;
 }
+

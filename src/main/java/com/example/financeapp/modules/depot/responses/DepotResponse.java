@@ -2,6 +2,9 @@ package com.example.financeapp.modules.depot.responses;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+
 public class DepotResponse {
     @Getter
     @Setter
@@ -10,5 +13,6 @@ public class DepotResponse {
 
     @Getter
     @Setter
-    private DepotShareInfoModel[] shares;
+    private ArrayList<DepotShareInfoModel> shares;
+
 }
