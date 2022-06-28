@@ -1,8 +1,10 @@
 package com.example.financeapp.modules.orderbook.communication.models;
 
+
 import com.example.financeapp.modules.orderbook.Order;
 import com.example.financeapp.modules.share.Share;
 import com.sun.istack.NotNull;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +16,7 @@ public class OrderCommunicationModel {
 
     @Getter
     @Setter
+
     private Order.OfferType offerType;
 
     @Getter
@@ -27,6 +30,7 @@ public class OrderCommunicationModel {
     @Getter
     @Setter
     @NotNull
+
     // Iso normed date string
     private String timestamp;
 
@@ -54,6 +58,4 @@ public class OrderCommunicationModel {
         this.timestamp= o.getTimestamp2();
         this.info = model;
     }
-
-
  }

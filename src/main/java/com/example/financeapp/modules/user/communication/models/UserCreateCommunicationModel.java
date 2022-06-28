@@ -1,6 +1,7 @@
 package com.example.financeapp.modules.user.communication.models;
 
 import com.example.financeapp.modules.user.User;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,5 +23,4 @@ public class UserCreateCommunicationModel {
     private String country;
     private String birthDate;
     private String taxNumber;
-
 }

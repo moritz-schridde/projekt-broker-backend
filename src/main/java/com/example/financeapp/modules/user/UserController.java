@@ -32,6 +32,7 @@ public class UserController {
         User user = userService.getUserByEmail(email);
         UserRequestCommunicationModel answerModel = new UserRequestCommunicationModel(user);
         return ResponseEntity.ok(answerModel);
+
     }
 
     @PostMapping()

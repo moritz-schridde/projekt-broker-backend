@@ -14,4 +14,5 @@ public class DepotResponse {
     @Getter
     @Setter
     private ArrayList<DepotShareInfoModel> shares;
+
 }

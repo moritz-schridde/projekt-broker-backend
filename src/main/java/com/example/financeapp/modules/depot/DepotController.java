@@ -26,15 +26,18 @@ public class DepotController {
         DepotResponse userDepot = depotService.getUserDepotShareList();
 
         /*ArrayList<DepotResponse> shareList = new ArrayList<>();
+
         DepotResponse response = new DepotResponse();
         DepotShareInfoModel[] shareInfos = new DepotShareInfoModel[5];
         DepotShareInfoModel shareInfoModel = new DepotShareInfoModel();
         shareInfoModel.setShare(new Share());
         shareInfos[0] = shareInfoModel;
         response.setShares(shareInfos);
+
         shareList.add(response);*/
 
         return ResponseEntity.ok(userDepot);
+
     }
 
     @GetMapping("/performance")

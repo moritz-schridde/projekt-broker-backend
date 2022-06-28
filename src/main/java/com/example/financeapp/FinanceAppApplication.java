@@ -36,6 +36,7 @@ public class FinanceAppApplication {
     CommandLineRunner init(ShareRepository shareRepository, UserRepository userRepository,
                            DepotRepository depotRepository, DepotShareAmountRepository depoShareAmountRepository, OrderRepository orderRepository, BankRepository bankRepository) {
         return args -> {
+
             Share s1 = new Share("SAP", "SAP", (byte) 1, 100.0, "tech", "SAP");
             shareRepository.save(s1);
             Share s2 = new Share("BASF", "BASF", (byte) 2, 50.0, "chemie", "BSF");
@@ -54,6 +55,7 @@ public class FinanceAppApplication {
             depotRepository.save(buyerDepot);
             userRepository.save(buyer);
             depoShareAmountRepository.save(buyerdsa);
+
 
 
             User seller = new User("seller", "melk", "davit@example.com", 12345,

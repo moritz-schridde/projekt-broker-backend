@@ -38,7 +38,9 @@ public class Share {
 
 
 
+
     public Share(String name, String shortname, byte iconId, double price, String category, String wkn) {
+
         this.name = name;
         this.shortname = shortname;
         this.iconId = iconId;

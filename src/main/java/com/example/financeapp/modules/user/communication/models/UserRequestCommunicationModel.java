@@ -1,5 +1,6 @@
 package com.example.financeapp.modules.user.communication.models;
 
+
 import com.example.financeapp.modules.user.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,4 +33,5 @@ public class UserRequestCommunicationModel {
         this.birthDate = user.getBirthDate();
         this.taxNumber = user.getTaxNumber();
     }
+
 }
