@@ -14,11 +14,13 @@ import com.example.financeapp.modules.depot.DepotShareAmount;
 import com.example.financeapp.modules.depot.DepotShareAmountRepository;
 import com.example.financeapp.modules.user.User;
 import com.example.financeapp.modules.user.UserRepository;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
 
 import java.sql.Timestamp;
 
@@ -32,7 +34,7 @@ public class FinanceAppApplication {
 
     @Bean
     CommandLineRunner init(ShareRepository shareRepository, UserRepository userRepository,
-                           DepotRepository depotRepository, DepotShareAmountRepository depoShareAmountRepository, OrderRepository orderRepository) {
+                           DepotRepository depotRepository, DepotShareAmountRepository depoShareAmountRepository, OrderRepository orderRepository, BankRepository bankRepository) {
         return args -> {
             Share s1 = new Share("SAP", "SAP", (byte) 1, 100.0, "tech", "SAP");
             shareRepository.save(s1);
@@ -82,17 +84,15 @@ public class FinanceAppApplication {
             orderRepository.save(sellOrder);
             orderRepository.save(buyOrder3);
 
+            Bank b1 = new Bank("DE89370400440532013000", seller, "Klaus", "Mayer", 25.5, "MANSDE66XXX", "blub");
+            Bank b2 = new Bank("asdfasdfasdf", seller, "Klaus", "Mayer", 25.5, "MANSDE66XXX", "blub");
 
-
-        };
-    }
-
-    @Bean
-    CommandLineRunner init2(BankRepository bankRepository
-    ) {
-        return args -> {
-            Bank b1 = new Bank("DE89370400440532013000", "Klaus", "Mayer", 25.5, "MANSDE66XXX", "blub", 1);
             bankRepository.save(b1);
+            bankRepository.save(b2);
+
+
+
         };
     }
+
 }
