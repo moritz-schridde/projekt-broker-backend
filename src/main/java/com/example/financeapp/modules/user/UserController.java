@@ -29,8 +29,9 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<UserRequestCommunicationModel> getUser() {
         String email = userService.getCurrentUsersEmail();
-        User users = userService.getUserByEmail(email);
-        return ResponseEntity.ok(new UserRequestCommunicationModel());
+        User user = userService.getUserByEmail(email);
+        UserRequestCommunicationModel answerModel = new UserRequestCommunicationModel(user);
+        return ResponseEntity.ok(answerModel);
     }
 
     @PostMapping()
